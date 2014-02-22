@@ -80,6 +80,7 @@
         <div class="col-xs-12 col-sm-9">
           <div class="row">
             <div class="col-6 col-sm-6 col-lg-4">
+              <h3>Floor Name</h3>
               <div class="btn-group btn-group-justified" style="padding-bottom:18px">
                 <div class="btn-group">
                   <button type="button" class="btn btn-danger">Down Floor</button>
@@ -122,9 +123,6 @@
           </div>
         </div>
       </div>
-
-<hr>
-
       <footer>
         <p>&copy; DoorKnocker 2014</p>
       </footer>

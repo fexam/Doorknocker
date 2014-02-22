@@ -80,15 +80,50 @@
         <div class="col-xs-12 col-sm-9">
           <div class="row">
             <div class="col-6 col-sm-6 col-lg-4">
+              <div class="btn-group btn-group-justified" style="padding-bottom:18px">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-danger">Down Floor</button>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-danger">Up Floor</button>
+                </div>
+              </div>
               <table class="table">
               	<?php include 'scripts/rooms.php'; ?>
               </table>
+              <button type="button" class="btn btn-block btn-danger">Switch Wings</button>
+              </div>
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
       </div><!--/row-->
 
-      <hr>
+      <div class="modal in fv-modal-stack" id="myModal" aria-hidden="false" style="display: none; z-index: 1050;">
+	<div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title">Room Number Here</h4>
+            </div>
+            <div class="container"></div>
+            <div class="modal-body">
+              <br>
+              <br>
+              <br>
+              <p>Information Here</p>
+              <br>
+              <br>
+              <br>
+            </div>
+            <div class="modal-footer">
+              <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+              <a href="#" data-dismiss="modal" class="btn btn-danger">Save changes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<hr>
 
       <footer>
         <p>&copy; DoorKnocker 2014</p>

@@ -37,13 +37,21 @@
 				
 				if($left == 1)
 				{
-					echo("left\">$number</td>\n");
+					echo("left\">$number");
+					echo("<p>");
+					echo("<a data-toggle=\"modal\" href=\"#myModal\" class=\"btn btn-default\" href=\"#\" role=\"button\" room=$number>Details »</a>");
+					echo("</p>");
+					echo("</td>");
 					echo("<td></td>");
 				}
 				else
 				{
-					echo("right\">$number</td>\n");
-					echo("</tr>\n");
+					echo("right\">$number");
+					echo("<p>");
+					echo("<a data-toggle=\"modal\" href=\"#myModal\" class=\"btn btn-default\" href=\"#\" role=\"button\" room=$number>Details »</a>");
+					echo("</p>");
+					echo("</td>");
+					echo("</tr>");
 					$first_time = 1;
 				}
 			}

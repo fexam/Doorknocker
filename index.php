@@ -78,15 +78,11 @@
     <div class="container">
       <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-12 col-sm-9">
-          <div class="jumbotron">
-            <h1>Hello, world!</h1>
-            <p>Test Site</p>
-          </div>
           <div class="row">
             <div class="col-6 col-sm-6 col-lg-4">
-              <h2>No room selected</h2>
-              <p>Table goes here</p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+              <table class="table">
+              	<?php include 'scripts/rooms.php'; ?>
+              </table>
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->

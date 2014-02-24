@@ -14,7 +14,7 @@
 		}
 		
 		function makeTable() {
-			$stmt = $this->db->prepare('SELECT * FROM room_test');
+			$stmt = $this->db->prepare('SELECT * FROM rooms');
 			$stmt->execute();
 			$stmt->bind_result($number, $state);
 			$first_time = 1;

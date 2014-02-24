@@ -16,9 +16,10 @@
 		function makeTable() {
 			$stmt = $this->db->prepare('SELECT * FROM room_test');
 			$stmt->execute();
-			$stmt->bind_result($number, $state, $left);
+			$stmt->bind_result($number, $state);
 			$first_time = 1;
-			
+			$left = 1;
+
 			while($stmt->fetch())
 			{
 				if($first_time == 1)
@@ -49,6 +50,7 @@
 					}
 					echo("</td>");
 					echo("<td></td>");
+					$left = 0;
 				}
 				else
 				{
@@ -65,6 +67,7 @@
 					echo("</td>");
 					echo("</tr>");
 					$first_time = 1;
+					$left = 1;
 				}
 			}
 			$stmt->close;

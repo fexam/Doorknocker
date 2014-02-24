@@ -318,6 +318,9 @@ figure {
 
 img {
     vertical-align: middle;
+    float: left;
+    padding-left: 10px;
+    padding-top: 6px;
 }
 
 .img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img,
@@ -4154,7 +4157,7 @@ select[multiple].input-group-sm>.input-group-addon, select[multiple].input-group
 
 .navbar-brand {
     float: left;
-    padding: 15px;
+    padding: 15px 15px 15px 10px;
     font-size: 18px;
     line-height: 20px;
     height: 50px;

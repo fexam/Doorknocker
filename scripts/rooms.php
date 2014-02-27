@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	class FindRooms {
 		private $db;
 		
@@ -14,7 +15,13 @@
 		}
 		
 		function makeTable() {
-			$stmt = $this->db->prepare('SELECT * FROM rooms');
+			$dorm = $_SESSION['dorm'];
+			$floor = $_SESSION['floor'];
+			$wing = $_SESSION['wing'];
+			$stmt = $this->db->prepare("SELECT r.room_number, r.state
+											 FROM dorms d, rooms r
+											 WHERE d.dorm_name='$dorm' and d.dorm_id=r.dorm_id
+											       and r.floor_num=$floor and r.wing='$wing'");
 			$stmt->execute();
 			$stmt->bind_result($number, $state);
 			$first_time = 1;
@@ -41,13 +48,15 @@
 					if($state < 4)
 						echo("left\">$number");
 					else
-						echo("none\"");
+						echo("lnone\">");
+					
 					if($state < 4)
 					{
 						echo("<p>");
 						echo("<a data-toggle=\"modal\" href=\"#myModal\" class=\"btn btn-default\" href=\"#\" role=\"button\" room=$number>Details »</a>");
 						echo("</p>");
 					}
+
 					echo("</td>");
 					echo("<td></td>");
 					$left = 0;
@@ -57,20 +66,22 @@
 					if($state < 4)
 						echo("right\">$number");
 					else
-						echo("none\"");
+						echo("rnone\">");
+
 					if($state < 4)
 					{
 						echo("<p>");
 						echo("<a data-toggle=\"modal\" href=\"#myModal\" class=\"btn btn-default\" href=\"#\" role=\"button\" room=$number>Details »</a>");
 						echo("</p>");
 					}
+
 					echo("</td>");
 					echo("</tr>");
 					$first_time = 1;
 					$left = 1;
 				}
 			}
-			$stmt->close;
+			$stmt->close();
 		}
 	}
 	$rooms = new FindRooms;

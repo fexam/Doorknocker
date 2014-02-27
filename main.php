@@ -2,6 +2,20 @@
   session_start();
   if(!isset($_SESSION['username']) || !isset($_SESSION['password']))
     header("location:index.php");
+  elseif(isset($_GET['switch']))
+  {
+    $_SESSION['dorm'] = $_GET['dorm'];
+    $_SESSION['floor'] = $_GET['floor'];
+    $_SESSION['wing'] = $_GET['wing'];
+    header("location:main.php");
+  }
+  elseif(!isset($_SESSION['dorm']))
+  {
+  	// Give it default values
+  	$_SESSION['dorm'] = "No Dorm Selected";
+  	$_SESSION['floor'] = -1;
+  	$_SESSION['wing'] = "Z";
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,12 +57,12 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cary Hall <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Floor 1 - (101 - 115)</a></li>
-                  <li><a href="#">Floor 1 - (114 - 130)</a></li>
-                  <li><a href="#">Floor 2 - (201 - 215)</a></li>
-                  <li><a href="#">Floor 2 - (214 - 231)</a></li>
-                  <li><a href="#">Floor 3 - (301 - 315)</a></li>
-                  <li><a href="#">Floor 3 - (314 - 331)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&wing=A">Floor 1 - (101 - 115)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&wing=B">Floor 1 - (114 - 130)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&wing=A">Floor 2 - (201 - 215)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&wing=B">Floor 2 - (214 - 231)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&wing=A">Floor 3 - (301 - 315)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&wing=B">Floor 3 - (314 - 331)</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -83,7 +97,9 @@
         <div class="col-xs-12 col-sm-9">
           <div class="row">
             <div class="col-6 col-sm-6 col-lg-4">
-              <h3>Floor Name</h3>
+              <?php
+              	echo("<h3>" . $_SESSION['dorm'] . "</h3>");
+              ?>
               <div class="btn-group btn-group-justified" style="padding-bottom:18px">
                 <div class="btn-group">
                   <button type="button" class="btn btn-danger">Down Floor</button>

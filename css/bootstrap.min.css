@@ -1732,7 +1732,14 @@ table td[class*=col-], table th[class*=col-] {
     border-right: solid #000000 1px;
 }
 
-.table>thead>tr>td.none, .table>tbody>tr>td.none, .table>tfoot>tr>td.none {
+.table>tbody>tr>td.info.lnone {
+    border-left: solid #000000 1px;
+    border-top: solid #000000 2px;
+    border-bottom: solid #000000 2px;
+    border-right: solid #000000 2px;
+}
+
+.table>tbody>tr>td.info.rnone {
     border-left: solid #000000 2px;
     border-top: solid #000000 2px;
     border-bottom: solid #000000 2px;

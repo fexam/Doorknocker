@@ -1735,6 +1735,15 @@ table td[class*=col-], table th[class*=col-] {
     background-size: 100% 100%;
 }
 
+.table>thead>tr>td>a, .table>tbody>tr>td>a, .table>tfoot>tr>td>a
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #000;
+    padding-top: 20px;
+}
+
 .table>thead>tr>td.rsurround, .table>tbody>tr>td.rsurround, .table>tfoot>tr>td.rsurround
 {
     background-image: url(../images/right_room.png);

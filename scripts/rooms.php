@@ -47,8 +47,9 @@
 				{
 					if($state < 4)
 					{
-						echo("lsurround\" ");
-						echo("data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">$number");
+						echo("lsurround\">");
+						echo("<a data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">");
+						echo("<span>$number</span></a>");
 					}
 					else
 						echo("lnone\">");
@@ -61,8 +62,9 @@
 				{
 					if($state < 4)
 					{
-						echo("rsurround\" ");
-					    echo("data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">$number");
+						echo("rsurround\">");
+					    echo("<a data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">");
+						echo("<span>$number</span></a>");
 					}
 					else
 						echo("rnone\">");

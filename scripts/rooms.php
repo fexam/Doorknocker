@@ -46,34 +46,26 @@
 				if($left == 1)
 				{
 					if($state < 4)
-						echo("left\">$number");
+					{
+						echo("lsurround\" ");
+						echo("data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">$number");
+					}
 					else
 						echo("lnone\">");
-					
-					if($state < 4)
-					{
-						echo("<p>");
-						echo("<a data-toggle=\"modal\" href=\"#myModal\" class=\"btn btn-default\" href=\"#\" role=\"button\" room=$number>Details »</a>");
-						echo("</p>");
-					}
 
 					echo("</td>");
-					echo("<td></td>");
+					echo("<td class=\"hall\"></td>");
 					$left = 0;
 				}
 				else
 				{
 					if($state < 4)
-						echo("right\">$number");
+					{
+						echo("rsurround\" ");
+					    echo("data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">$number");
+					}
 					else
 						echo("rnone\">");
-
-					if($state < 4)
-					{
-						echo("<p>");
-						echo("<a data-toggle=\"modal\" href=\"#myModal\" class=\"btn btn-default\" href=\"#\" role=\"button\" room=$number>Details »</a>");
-						echo("</p>");
-					}
 
 					echo("</td>");
 					echo("</tr>");

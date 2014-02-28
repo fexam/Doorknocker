@@ -27,9 +27,7 @@
   </head>
 
   <body>
-
     <div class="container">
-
       <form class="form-signin" role="form" action='scripts/login.php' method='post'>
         <h2 class="form-signin-heading">Please sign in</h2>
         <?php
@@ -43,12 +41,6 @@
         <input name="password" type="password" class="form-control" placeholder="Password" required>
         <button class="btn btn-lg btn-danger btn-block" type="submit">Sign in</button>
       </form>
-
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    </div>
   </body>
 </html>

@@ -25,6 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/offcanvas.css" rel="stylesheet">
+    <link href="css/room.layout.css" rel="stylesheet">
     <title>DoorKnocker</title>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

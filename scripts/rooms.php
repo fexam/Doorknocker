@@ -63,7 +63,7 @@
 					if($state < 4)
 					{
 						echo("rsurround\">");
-					    echo("<a data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">");
+						echo("<a data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">");
 						echo("<span>$number</span></a>");
 					}
 					else

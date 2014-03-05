@@ -6,14 +6,26 @@
   {
     $_SESSION['dorm'] = $_GET['dorm'];
     $_SESSION['floor'] = $_GET['floor'];
+    $_SESSION['max'] = $_GET['max'];
     $_SESSION['wing'] = $_GET['wing'];
     header("location:main.php");
+  }
+  elseif(isset($_GET['floor']))
+  {
+  	$_SESSION['floor'] = $_GET['floor'];
+  	header("location:main.php");
+  }
+  elseif(isset($_GET['wing']))
+  {
+  	$_SESSION['wing'] = $_GET['wing'];
+  	header("location:main.php");
   }
   elseif(!isset($_SESSION['dorm']))
   {
   	// Give it default values
   	$_SESSION['dorm'] = "No Dorm Selected";
   	$_SESSION['floor'] = -1;
+  	$_SESSION['max'] = 0;
   	$_SESSION['wing'] = "Z";
   }
 ?>
@@ -28,6 +40,22 @@
     <link href="css/room.layout.css" rel="stylesheet">
     <title>DoorKnocker</title>
 
+    <script type="text/javascript">
+    	function setModal(number, state)
+	    {
+	    	var element = document.getElementById("popover_room");
+	    	element.innerText = "Room " + number;
+
+	    	if(state == 0)
+				document.getElementById("radio4").checked = true;
+	    	else if(state == 1)
+	    		document.getElementById("radio1").checked = true;
+	    	else if(state == 2)
+				document.getElementById("radio2").checked = true;
+	    	else if(state == 3)
+				document.getElementById("radio3").checked = true;
+	    }
+    </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -52,12 +80,12 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cary Hall <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&wing=A">Floor 1 - (101 - 115)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&wing=B">Floor 1 - (114 - 130)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&wing=A">Floor 2 - (201 - 215)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&wing=B">Floor 2 - (214 - 231)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&wing=A">Floor 3 - (301 - 315)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&wing=B">Floor 3 - (314 - 331)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=A&">Floor 1 - (101 - 115)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=B">Floor 1 - (114 - 130)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=A">Floor 2 - (201 - 215)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=B">Floor 2 - (214 - 231)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=A">Floor 3 - (301 - 315)</a></li>
+                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=B">Floor 3 - (314 - 331)</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -95,21 +123,48 @@
               <?php
               	echo("<h3>" . $_SESSION['dorm'] . "</h3>");
               ?>
-              <div class="btn-group btn-group-justified" style="padding-bottom:18px">
+              <div class="btn-group btn-group-justified" style="padding-bottom:15px">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-danger">Down Floor</button>
+                  <?php
+                    if($_SESSION['floor'] > 1)
+                  	  echo("<a href=\"?floor=" . ($_SESSION['floor']-1) . "\" class=\"btn btn-danger\">Down Floor</a>");
+                    else
+                      echo("<button type\"button\" class=\"btn btn-danger\" disabled=\"disabled\">Down Floor</button>");
+                  ?>
                 </div>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-danger">Up Floor</button>
+                  <?php
+                    if($_SESSION['floor'] < $_SESSION['max'] && $_SESSION['floor'] >= 1)
+                  	  echo("<a href=\"?floor=" . ($_SESSION['floor']+1) . "\" class=\"btn btn-danger\">Up Floor</a>");
+                  	else
+                  	  echo("<button type\"button\" class=\"btn btn-danger\" disabled=\"disabled\">Up Floor</button>");
+                  ?>
                 </div>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-danger">Blacklist</button>
+                  <?php
+                    if($_SESSION['floor'] >= 1)
+                   	  echo("<button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\">");
+                   	else
+                   	  echo("<button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\" disabled=\"disabled\">");
+                  ?>
+                  	More
+                  	<span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                  	<li><a href="#">Rotate Floor</a></li>
+                  	<li><a href="#">Blacklist Wing</a></li>
+                  </ul>
                 </div>
               </div>
               <table class="table">
               	<?php include 'scripts/rooms.php'; ?>
               </table>
-              <button type="button" class="btn btn-block btn-danger">Switch Wings</button>
+              <?php
+              	if($_SESSION['floor'] >= 1)
+                  echo("<button type=\"button\" class=\"btn btn-block btn-danger\">Switch Wings</button>");
+                else
+              	  echo("<button type=\"button\" class=\"btn btn-block btn-danger\" disabled=\"disabled\">Switch Wings</button>");
+              ?>
             </div>
           </div><!--/span-->
         </div><!--/row-->
@@ -119,12 +174,12 @@
       </footer>
     </div><!--/container-->
 
-	<div class="modal in fv-modal-stack" id="myModal" aria-hidden="false" style="display: none; z-index: 1050;">
+	<div class="modal fade" id="myModal" aria-hidden="false" style="display: none; z-index: 1050;">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <h4 class="modal-title">Room Number Here</h4>
+		    <h4 class="modal-title" id="popover_room">Room Number Here</h4>
 		  </div>
 		    <div class="container"></div>
 		    <div class="modal-body">
@@ -152,9 +207,11 @@
 		          Gray - Needs Visiting
 		        </label>
 		      </div>
+		      <label>Notes:</label>
+   			  <input name="notes" type="text" id="notes">
 		      <br>
-		      <p>Last Modified: 3/12/14 2:01PM</p>
-		      <p>User Modified: Matt</p>
+		      <br>
+		      <p id="modified">Last Modified: Matt - 3/12/14</p>
 		    </div>
 		    <div class="modal-footer">
 		      <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>

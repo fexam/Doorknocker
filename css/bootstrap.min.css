@@ -3357,7 +3357,7 @@ input[type=submit].btn-block, input[type=reset].btn-block, input[type=button].bt
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 0;
+    right: 0;
     z-index: 1000;
     display: none;
     float: left;
@@ -3373,10 +3373,11 @@ input[type=submit].btn-block, input[type=reset].btn-block, input[type=button].bt
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     background-clip: padding-box;
+    right: 20;
 }
 
 .dropdown-menu.pull-right {
-    right: 0;
+    right: 20;
     left: auto;
 }
 
@@ -3393,7 +3394,7 @@ input[type=submit].btn-block, input[type=reset].btn-block, input[type=button].bt
     clear: both;
     font-weight: 400;
     line-height: 1.42857143;
-    color: #fff;
+    color: #000;
     white-space: nowrap;
 }
 

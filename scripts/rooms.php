@@ -48,7 +48,7 @@
 					if($state < 4)
 					{
 						echo("lsurround\">");
-						echo("<a data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">");
+						echo("<a data-toggle=\"modal\" href=\"#myModal\" onclick=\"setModal('$number', $state)\">");
 						echo("<span>$number</span></a>");
 					}
 					else
@@ -63,7 +63,7 @@
 					if($state < 4)
 					{
 						echo("rsurround\">");
-						echo("<a data-toggle=\"modal\" href=\"#myModal\" room=\"$number\">");
+						echo("<a data-toggle=\"modal\" href=\"#myModal\" onclick=\"setModal('$number', $state)\">");
 						echo("<span>$number</span></a>");
 					}
 					else

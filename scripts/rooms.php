@@ -18,12 +18,26 @@
 			$dorm = $_SESSION['dorm'];
 			$floor = $_SESSION['floor'];
 			$wing = $_SESSION['wing'];
-			$stmt = $this->db->prepare("SELECT r.room_number, r.state
+			$rotate = $_SESSION['rotate'];
+
+			if($rotate == true)
+			{
+				$stmt = $this->db->prepare("SELECT r.room_number, r.state, r.id
 											 FROM dorms d, rooms r
 											 WHERE d.dorm_name='$dorm' and d.dorm_id=r.dorm_id
-											       and r.floor_num=$floor and r.wing='$wing'");
+											       and r.floor_num=$floor and r.wing='$wing'
+											 ORDER BY r.id DESC");
+			}
+			else
+			{
+				$stmt = $this->db->prepare("SELECT r.room_number, r.state, r.id
+											 FROM dorms d, rooms r
+											 WHERE d.dorm_name='$dorm' and d.dorm_id=r.dorm_id
+											       and r.floor_num=$floor and r.wing='$wing'
+											 ORDER BY r.id ASC");
+			}
 			$stmt->execute();
-			$stmt->bind_result($number, $state);
+			$stmt->bind_result($number, $state, $id);
 			$first_time = 1;
 			$left = 1;
 

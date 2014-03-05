@@ -20,6 +20,11 @@
   	$_SESSION['wing'] = $_GET['wing'];
   	header("location:main.php");
   }
+  elseif(isset($_GET['rotate']))
+  {
+  	$_SESSION['rotate'] = $_GET['rotate'];
+  	header("location:main.php");
+  }
   elseif(!isset($_SESSION['dorm']))
   {
   	// Give it default values
@@ -27,6 +32,7 @@
   	$_SESSION['floor'] = -1;
   	$_SESSION['max'] = 0;
   	$_SESSION['wing'] = "Z";
+  	$_SESSION['rotate'] = false;
   }
 ?>
 <!DOCTYPE html>
@@ -78,40 +84,40 @@
           <ul class="nav navbar-nav">
             <li><a href="scripts/logout.php">Sign Out</a></li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cary Hall <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=A&">Floor 1 - (101 - 115)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=B">Floor 1 - (114 - 130)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=A">Floor 2 - (201 - 215)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=B">Floor 2 - (214 - 231)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=A">Floor 3 - (301 - 315)</a></li>
-                  <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=B">Floor 3 - (314 - 331)</a></li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Crockett Hall <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Floor 1 - (101 - 115)</a></li>
-                  <li><a href="#">Floor 1 - (114 - 130)</a></li>
-                  <li><a href="#">Floor 2 - (201 - 215)</a></li>
-                  <li><a href="#">Floor 2 - (214 - 229)</a></li>
-                  <li><a href="#">Floor 3 - (301 - 315)</a></li>
-                  <li><a href="#">Floor 3 - (314 - 331)</a></li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hall Hall <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Floor 1 - (101 - 115)</a></li>
-                  <li><a href="#">Floor 1 - (114 - 130)</a></li>
-                  <li><a href="#">Floor 2 - (201 - 215)</a></li>
-                  <li><a href="#">Floor 2 - (214 - 231)</a></li>
-                  <li><a href="#">Floor 3 - (301 - 315)</a></li>
-                  <li><a href="#">Floor 3 - (314 - 331)</a></li>
-                </ul>
-              </li>
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cary Hall <b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=A&">Floor 1 - (101 - 115)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=B">Floor 1 - (114 - 130)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=A">Floor 2 - (201 - 215)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=B">Floor 2 - (214 - 231)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=A">Floor 3 - (301 - 315)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=B">Floor 3 - (314 - 331)</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Crockett Hall <b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Floor 1 - (101 - 115)</a></li>
+	            <li><a href="#">Floor 1 - (114 - 130)</a></li>
+	            <li><a href="#">Floor 2 - (201 - 215)</a></li>
+	            <li><a href="#">Floor 2 - (214 - 229)</a></li>
+	            <li><a href="#">Floor 3 - (301 - 315)</a></li>
+	            <li><a href="#">Floor 3 - (314 - 331)</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hall Hall <b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Floor 1 - (101 - 115)</a></li>
+	            <li><a href="#">Floor 1 - (114 - 130)</a></li>
+	            <li><a href="#">Floor 2 - (201 - 215)</a></li>
+	            <li><a href="#">Floor 2 - (214 - 231)</a></li>
+	            <li><a href="#">Floor 3 - (301 - 315)</a></li>
+	            <li><a href="#">Floor 3 - (314 - 331)</a></li>
+	          </ul>
+	        </li>
           </ul>
-        </div><!-- /.nav-collapse -->
+        </div><!-- /.nav-header -->
       </div><!-- /.container -->
     </div><!-- /.navbar -->
 
@@ -151,7 +157,9 @@
                   	<span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                  	<li><a href="#">Rotate Floor</a></li>
+                  	<?php
+                  	  echo("<li><a href=\"?rotate=" . !$_SESSION['rotate'] . "\">Rotate Floor</a></li>");
+                  	?>
                   	<li><a href="#">Blacklist Wing</a></li>
                   </ul>
                 </div>
@@ -202,23 +210,23 @@
 		        </label>
 		      </div>
 		      <div class="radio">
-		        <label>
-		          <input type="radio" name="optionsRadios" id="radio4" value="gray">
-		          Gray - Needs Visiting
-		        </label>
-		      </div>
-		      <label>Notes:</label>
-   			  <input name="notes" type="text" id="notes">
-		      <br>
-		      <br>
-		      <p id="modified">Last Modified: Matt - 3/12/14</p>
+		      <label>
+		        <input type="radio" name="optionsRadios" id="radio4" value="gray">
+		        Gray - Needs Visiting
+		      </label>
 		    </div>
-		    <div class="modal-footer">
-		      <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
-		      <a href="#" data-dismiss="modal" class="btn btn-danger">Save changes</a>
-		    </div>
-		  </div>
-		</div>
+		    <label>Notes:</label>
+			<input name="notes" type="text" id="notes">
+	        <br>
+	        <br>
+	        <p id="modified">Last Modified: Matt - 3/12/14</p>
+	      </div>
+	      <div class="modal-footer">
+	        <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+	        <a href="#" data-dismiss="modal" class="btn btn-danger">Save changes</a>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
     <!-- Bootstrap core JavaScript

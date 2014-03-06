@@ -8,6 +8,7 @@
     $_SESSION['floor'] = $_GET['floor'];
     $_SESSION['max'] = $_GET['max'];
     $_SESSION['wing'] = $_GET['wing'];
+    $_SESSION['max_wing'] = $_GET['max_wing'];
     header("location:main.php");
   }
   elseif(isset($_GET['floor']))
@@ -33,6 +34,7 @@
   	$_SESSION['max'] = 0;
   	$_SESSION['wing'] = "Z";
   	$_SESSION['rotate'] = false;
+  	$_SESSION['max_wing'] = "Z";
   }
 ?>
 <!DOCTYPE html>
@@ -86,12 +88,12 @@
             <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cary Hall <b class="caret"></b></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=A&">Floor 1 - (101 - 115)</a></li>
-	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=B">Floor 1 - (114 - 130)</a></li>
-	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=A">Floor 2 - (201 - 215)</a></li>
-	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=B">Floor 2 - (214 - 231)</a></li>
-	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=A">Floor 3 - (301 - 315)</a></li>
-	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=B">Floor 3 - (314 - 331)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=A&max_wing=B">Floor 1 - (101 - 115)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=B&max_wing=B">Floor 1 - (114 - 130)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=A&max_wing=B">Floor 2 - (201 - 215)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=2&max=3&wing=B&max_wing=B">Floor 2 - (214 - 231)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=A&max_wing=B">Floor 3 - (301 - 315)</a></li>
+	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=B&max_wing=B">Floor 3 - (314 - 331)</a></li>
 	          </ul>
 	        </li>
 	        <li class="dropdown">
@@ -160,7 +162,7 @@
                   	<?php
                   	  echo("<li><a href=\"?rotate=" . !$_SESSION['rotate'] . "\">Rotate Floor</a></li>");
                   	?>
-                  	<li><a href="#">Blacklist Wing</a></li>
+                  	<li><a href="#">Mark All Rooms</a></li>
                   </ul>
                 </div>
               </div>
@@ -169,7 +171,14 @@
               </table>
               <?php
               	if($_SESSION['floor'] >= 1)
-                  echo("<button type=\"button\" class=\"btn btn-block btn-danger\">Switch Wings</button>");
+              	{
+              	  $w = $_SESSION['wing'];
+              	  if($w == $_SESSION['max_wing'])
+              	  	$w = A;
+              	  else
+              	  	$w++;
+                  echo("<a href=\"?wing=" . $w . "\" class=\"btn btn-block btn-danger\">Switch Wings</a>");
+              	}
                 else
               	  echo("<button type=\"button\" class=\"btn btn-block btn-danger\" disabled=\"disabled\">Switch Wings</button>");
               ?>

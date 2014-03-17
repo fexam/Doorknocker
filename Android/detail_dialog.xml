@@ -47,7 +47,7 @@
             android:id="@+id/available"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Available"
+            android:text="Accept"
 
             android:background="#00ff0a" />
         <RadioButton
@@ -84,6 +84,7 @@
             android:text="Note: "
             />
         <EditText
+            android:id="@+id/Note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Additional comment"

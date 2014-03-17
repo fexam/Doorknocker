@@ -10,10 +10,13 @@ import android.text.format.Time;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
+
 
 /**
  * Created by nutjung on 2/22/14.
@@ -24,12 +27,22 @@ public class DetailDialog extends Dialog implements View.OnClickListener{
     public Dialog d;
     public Button confirm,cancel,room;
     public RadioButton a,p,r,u;
+    public LinearLayout ll;
+    private Room rr;
 
-
-    public DetailDialog(Activity a,View temp){
+    public DetailDialog(Activity a,View temp, LinearLayout l){
         super(a);
         this.room = (Button) temp;
         this.c=a;
+        this.ll = l;
+    }
+
+    public DetailDialog(Activity a,View temp, LinearLayout l,Room rl){
+        super(a);
+        this.room = (Button) temp;
+        this.c=a;
+        this.ll = l;
+        this.rr = rl;
     }
 
     @Override
@@ -45,22 +58,28 @@ public class DetailDialog extends Dialog implements View.OnClickListener{
         p = (RadioButton) findViewById(R.id.pending);
         r = (RadioButton) findViewById(R.id.reject);
         u = (RadioButton) findViewById(R.id.unvisited);
-        //(TO DO) update the dialog based on object
-        //Below isn't
+
         TextView r_name = (TextView) findViewById(R.id.Room_Number);
-        r_name.setText(room.getText());
-        ColorDrawable buttonColor = (ColorDrawable) room.getBackground();
-        int colorID = buttonColor.getColor();
-        if( colorID==Color.GREEN) {
+        String fullName = rr.getFull_name();
+        String subname = fullName.substring(0,4);
+        if(subname.equalsIgnoreCase("BARH")){
+            fullName = subname +" "+fullName.substring(4,5) + fullName.substring(6);
+        }
+        r_name.setText(fullName);
+        if( rr.getStatus()==0) {
             a.setChecked(true);
-        }else if(colorID==Color.YELLOW){
+        }else if(rr.getStatus()==1){
             p.setChecked(true);
-        }else if(colorID==Color.RED){
+        }else if(rr.getStatus()==2){
             r.setChecked(true);
         }
-        else if( colorID==Color.WHITE){
+        else if(rr.getStatus()==3){
             u.setChecked(true);
         }
+        TextView r_time = (TextView) findViewById(R.id.last_updated);
+        r_time.setText(rr.getTime());
+        EditText r_edit = (EditText) findViewById(R.id.Note);
+        r_edit.setText(rr.getNote());
     }
 
     @Override
@@ -71,20 +90,26 @@ public class DetailDialog extends Dialog implements View.OnClickListener{
         if(v_id==R.id.dialog_confirm){
 
             if(a.isChecked()){
-                room.setBackgroundColor(Color.GREEN);
+                ll.setBackgroundColor(Color.GREEN);
+                rr.setStatus(0);
             }
             else if(p.isChecked()){
-                room.setBackgroundColor(Color.YELLOW);
+                ll.setBackgroundColor(Color.YELLOW);
+                rr.setStatus(1);
             }
             else if(r.isChecked()){
-                room.setBackgroundColor(Color.RED);
+                ll.setBackgroundColor(Color.RED);
+                rr.setStatus(2);
             }
             else if(u.isChecked()){
-                room.setBackgroundColor(Color.WHITE);
+                ll.setBackgroundColor(Color.WHITE);
+                rr.setStatus(3);
             }
             Time now = new Time();
             now.setToNow();
-            //Testing Time
+            rr.setTime(now.format("%m/%d/%Y"));
+            EditText r_edit = (EditText) findViewById(R.id.Note);
+            rr.setNote(r_edit.getText().toString());
             //room.setText(now.format("%m/%d/%Y"));
         }
         else if(v_id==R.id.dialog_cancel)

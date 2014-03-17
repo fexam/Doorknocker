@@ -1,1 +1,13 @@
-http://doorknocker.myrpi.org/scripts/android/rooms.php?dorm=Cary%20Hall&floor=1&wing=A&rotate=false
+http://doorknocker.myrpi.org/scripts/android/rooms.php?dorm=Cary%20Hall&floor=1&wing=A
+
+Formatting of URL:
+dorm: Cary%20Hall, Hall%20Hall, etc.
+
+floor numbers:
+0 - blank room
+1 - green room
+2 - yellow room
+3 - red room
+4 - no room(ex. bathroom)
+
+wing: A, B, C, D, etc.

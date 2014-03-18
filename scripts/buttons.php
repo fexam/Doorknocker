@@ -24,8 +24,13 @@
   echo("</button>");
   echo("<ul class=\"dropdown-menu\">");
   echo("<li><a href=\"?rotate=" . !$_SESSION['rotate'] . "\">Rotate Floor</a></li>");
-  echo("<li><a href=\"#\">Mark All Rooms</a></li>");
+  $w = $_SESSION['wing'];
+  if($w == $_SESSION['max_wing'])
+    $w = A;
+  else
+    $w++;
+  echo("<li><a href=\"?wing=" . $w . "\">Switch Wings</a></li>");
+  echo("<li><a onclick=\"markAll()\">Mark All Rooms</a></li>");
   echo("</ul>");
-
   echo("</div>");
 ?>

@@ -2,7 +2,7 @@
   session_start();
   if(isset($_SESSION['username']) && isset($_SESSION['password']))
   {
-    header("location:main.php");
+    header("location:../main.php");
   }
 ?>
 <!DOCTYPE html>
@@ -11,10 +11,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DoorKnocker Signin</title>
+    <title>DoorKnocker Signup</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/signin.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/signin.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -25,22 +25,20 @@
 
   <body>
     <div class="container">
-      <form class="form-signin" role="form" action='scripts/login.php' method='post'>
-        <h2 class="form-signin-heading">Please sign in</h2>
+      <form class="form-signin" role="form" action='scripts/signup.php' method='post'>
+        <h2 class="form-signin-heading">Welcome!</h2>
         <?php
-          if(isset($_SESSION['fail_login']) && $_SESSION['fail_login'] == TRUE)
+          if(isset($_SESSION['fail_signup']) && $_SESSION['fail_signup'] == TRUE)
           {
-            unset($_SESSION['fail_login']);
-            echo('<h5>Sorry, Invalid Login Credentials</h5>');
+            unset($_SESSION['fail_signup']);
+            echo('<h5>Sorry, Username Already in Use</h5>');
           }
         ?>
         <input name="username" type="text" class="form-control" placeholder="Username" required autofocus>
         <input name="password" type="password" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-danger btn-block" type="submit">Log In</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+        <p style="margin: 10px 0 0"><a href="../index.php">&laquo Back to Login</a></p>
       </form>
-      <form class="form-signup">
-        <a href="signup.php" class="btn btn-lg btn-primary btn-block">Sign Up</a>
-	    </form>
     </div>
   </body>
 </html>

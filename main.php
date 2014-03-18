@@ -48,22 +48,6 @@
     <link href="css/room.layout.css" rel="stylesheet">
     <title>DoorKnocker</title>
 
-    <script type="text/javascript">
-    	function setModal(number, state)
-	    {
-	    	var element = document.getElementById("popover_room");
-	    	element.innerText = "Room " + number;
-
-	    	if(state == 0)
-				document.getElementById("radio4").checked = true;
-	    	else if(state == 1)
-	    		document.getElementById("radio1").checked = true;
-	    	else if(state == 2)
-				document.getElementById("radio2").checked = true;
-	    	else if(state == 3)
-				document.getElementById("radio3").checked = true;
-	    }
-    </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -137,19 +121,6 @@
               <table class="table">
               	<?php include 'scripts/rooms.php'; ?>
               </table>
-              <?php
-              	if($_SESSION['floor'] >= 1)
-              	{
-              	  $w = $_SESSION['wing'];
-              	  if($w == $_SESSION['max_wing'])
-              	  	$w = A;
-              	  else
-              	  	$w++;
-                  echo("<a href=\"?wing=" . $w . "\" class=\"btn btn-block btn-danger\">Switch Wings</a>");
-              	}
-                else
-              	  echo("<button type=\"button\" class=\"btn btn-block btn-danger\" disabled=\"disabled\">Switch Wings</button>");
-              ?>
             </div>
           </div><!--/span-->
         </div><!--/row-->
@@ -162,46 +133,48 @@
 	<div class="modal fade" id="myModal" aria-hidden="false" style="display: none; z-index: 1050;">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <h4 class="modal-title" id="popover_room">Room Number Here</h4>
-		  </div>
-		    <div class="container"></div>
-		    <div class="modal-body">
-		      <div class="radio">
-		        <label>
-		          <input type="radio" name="optionsRadios" id="radio1" value="green" checked>
-		          Green - Considering
-		        </label>
-		      </div>
-		      <div class="radio">
-		        <label>
-		          <input type="radio" name="optionsRadios" id="radio2" value="yellow">
-		          Yellow - Neutral
-		        </label>
-		      </div>
-		      <div class="radio">
-		        <label>
-		          <input type="radio" name="optionsRadios" id="radio3" value="red">
-		          Red - Not Interested
-		        </label>
-		      </div>
-		      <div class="radio">
-		      <label>
-		        <input type="radio" name="optionsRadios" id="radio4" value="gray">
-		        Gray - Needs Visiting
-		      </label>
-		    </div>
-		    <label>Notes:</label>
-			<input name="notes" type="text" id="notes">
-	        <br>
-	        <br>
-	        <p id="modified">Last Modified: Matt - 3/12/14</p>
-	      </div>
-	      <div class="modal-footer">
-	        <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
-	        <a href="#" data-dismiss="modal" class="btn btn-danger">Save changes</a>
-	      </div>
+        <form id="room_save">
+    		  <div class="modal-header">
+    		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    		    <h4 class="modal-title" id="popover_room" name="room">Room Number Here</h4>
+    		  </div>
+  		    <div class="container"></div>
+  		    <div class="modal-body">
+  		      <div class="radio">
+  		        <label>
+  		          <input type="radio" name="optionsRadios" id="radio1" value="green" checked>
+  		          Green - Considering
+  		        </label>
+  		      </div>
+  		      <div class="radio">
+  		        <label>
+  		          <input type="radio" name="optionsRadios" id="radio2" value="yellow">
+  		          Yellow - Neutral
+  		        </label>
+  		      </div>
+  		      <div class="radio">
+  		        <label>
+  		          <input type="radio" name="optionsRadios" id="radio3" value="red">
+  		          Red - Not Interested
+  		        </label>
+  		      </div>
+  		      <div class="radio">
+  		      <label>
+  		        <input type="radio" name="optionsRadios" id="radio4" value="gray">
+  		        Gray - Needs Visiting
+  		      </label>
+  		    </div>
+          <label>Notes:</label>
+          <input name="notes" type="text" id="note">
+          <br>
+          <br>
+          <p id="modified">Last Modified: 3/12/14</p>
+  	      </div>
+  	      <div class="modal-footer">
+  	        <a data-dismiss="modal" class="btn btn-default">Close</a>
+  	        <a data-dismiss="modal" class="btn btn-danger" onclick="saveModal()" type="submit">Save changes</a>
+  	      </div>
+        </form>
 	    </div>
 	  </div>
 	</div>
@@ -212,5 +185,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/offcanvas.js"></script>
+    <script src="js/roomchange.js"></script>
   </body>
 </html>

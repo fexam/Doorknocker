@@ -22,7 +22,7 @@
 
 			if($rotate == true)
 			{
-				$stmt = $this->db->prepare("SELECT r.room_number, r.state, r.id
+				$stmt = $this->db->prepare("SELECT r.id, r.room_number, r.state, r.notes, r.date, r.state1, r.state2, r.state3
 											 FROM dorms d, rooms r
 											 WHERE d.dorm_name='$dorm' and d.dorm_id=r.dorm_id
 											       and r.floor_num=$floor and r.wing='$wing'
@@ -30,14 +30,14 @@
 			}
 			else
 			{
-				$stmt = $this->db->prepare("SELECT r.room_number, r.state, r.id
+				$stmt = $this->db->prepare("SELECT r.id, r.room_number, r.state, r.notes, r.date, r.state1, r.state2, r.state3
 											 FROM dorms d, rooms r
 											 WHERE d.dorm_name='$dorm' and d.dorm_id=r.dorm_id
 											       and r.floor_num=$floor and r.wing='$wing'
 											 ORDER BY r.id ASC");
 			}
 			$stmt->execute();
-			$stmt->bind_result($number, $state, $id);
+			$stmt->bind_result($id, $number, $state, $note, $date, $state1, $state2, $state3);
 			$first_time = 1;
 			$left = 1;
 
@@ -61,9 +61,26 @@
 				{
 					if($state < 4)
 					{
-						echo("lsurround\">");
-						echo("<a data-toggle=\"modal\" href=\"#myModal\" onclick=\"setModal('$number', $state)\">");
+						echo("lsurround\" id=\"$number\" note=\"$note\" date=\"$date\">");
+						echo("<a data-toggle=\"modal\" href=\"#myModal\" onclick=\"setModal($number)\">");
 						echo("<span>$number</span></a>");
+						echo("<span class=\"previous ");
+						if($state1 == 0) echo("empty\"></span>");
+						else if($state1 == 1) echo("green\"></span>");
+						else if($state1 == 2) echo("yellow\"></span>");
+						else if($state1 == 3) echo("red\"></span>");
+
+						echo("<span class=\"previous ");
+						if($state2 == 0) echo("empty\"></span>");
+						else if($state2 == 1) echo("green\"></span>");
+						else if($state2 == 2) echo("yellow\"></span>");
+						else if($state2 == 3) echo("red\"></span>");
+						
+						echo("<span class=\"previous ");
+						if($state3 == 0) echo("empty\"></span>");
+						else if($state3 == 1) echo("green\"></span>");
+						else if($state3 == 2) echo("yellow\"></span>");
+						else if($state3 == 3) echo("red\"></span>");
 					}
 					else
 						echo("lnone\">");
@@ -76,9 +93,26 @@
 				{
 					if($state < 4)
 					{
-						echo("rsurround\">");
-						echo("<a data-toggle=\"modal\" href=\"#myModal\" onclick=\"setModal('$number', $state)\">");
+						echo("rsurround\" id=\"$number\" note=\"$note\" date=\"$date\">");
+						echo("<a data-toggle=\"modal\" href=\"#myModal\" onclick=\"setModal($number)\">");
 						echo("<span>$number</span></a>");
+						echo("<span class=\"previous ");
+						if($state1 == 0) echo("empty\"></span>");
+						else if($state1 == 1) echo("green\"></span>");
+						else if($state1 == 2) echo("yellow\"></span>");
+						else if($state1 == 3) echo("red\"></span>");
+
+						echo("<span class=\"previous ");
+						if($state2 == 0) echo("empty\"></span>");
+						else if($state2 == 1) echo("green\"></span>");
+						else if($state2 == 2) echo("yellow\"></span>");
+						else if($state2 == 3) echo("red\"></span>");
+						
+						echo("<span class=\"previous ");
+						if($state3 == 0) echo("empty\"></span>");
+						else if($state3 == 1) echo("green\"></span>");
+						else if($state3 == 2) echo("yellow\"></span>");
+						else if($state3 == 3) echo("red\"></span>");
 					}
 					else
 						echo("rnone\">");

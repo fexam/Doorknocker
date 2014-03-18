@@ -42,3 +42,40 @@
     background-size: 100% 100%;
 
 }
+
+span.previous
+{
+    padding: 5px 10px;
+}
+
+span.previous.green
+{
+    background-image: url(../images/green.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px 15px;
+}
+
+span.previous.yellow
+{
+    background-image: url(../images/yellow.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px 15px;
+}
+
+span.previous.red
+{
+    background-image: url(../images/red.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px 15px;
+}
+
+span.previous.empty
+{
+    background-image: url(../images/empty.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px 15px;
+}

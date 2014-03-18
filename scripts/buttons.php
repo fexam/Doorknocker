@@ -23,7 +23,7 @@
   echo("More <span class=\"caret\"></span>");
   echo("</button>");
   echo("<ul class=\"dropdown-menu\">");
-  echo("<li><a href=\"?rotate=" . !$_SESSION['rotate'] . "\">Rotate Floor</a></li>");
+  echo("<li><a href=\"?rotate=" . !$_SESSION['rotate'] . "\">Flip Floor</a></li>");
   $w = $_SESSION['wing'];
   if($w == $_SESSION['max_wing'])
     $w = A;

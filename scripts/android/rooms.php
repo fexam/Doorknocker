@@ -19,7 +19,11 @@
 	$rows = array();
 	while($r = mysql_fetch_assoc($stmt))
 	{
+		$state = $r['state'];
+		if($state != 4)
+			$state = ($state-1 == -1 ? $state=3 : $state-1);
+		$r['state'] = $state;
 		$rows[] = $r;
 	}
-	print json_encode($rows);
+	echo json_encode($rows);
 ?>

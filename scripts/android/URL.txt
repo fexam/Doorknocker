@@ -3,11 +3,11 @@ http://doorknocker.myrpi.org/scripts/android/rooms.php?dorm=Cary%20Hall&floor=1&
 Formatting of URL:
 dorm: Cary%20Hall, Hall%20Hall, etc.
 
-floor numbers:
-0 - blank room
-1 - green room
-2 - yellow room
-3 - red room
+floor status:
+0 - green room
+1 - yellow room
+2 - red room
+3 - blank room
 4 - no room(ex. bathroom)
 
 wing: A, B, C, D, etc.

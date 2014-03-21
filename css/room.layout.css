@@ -1,4 +1,3 @@
-.table>thead>tr>th.hall, .table>tbody>tr>th.hall, .table>tfoot>tr>th.hall
 .table>thead>tr>td.hall, .table>tbody>tr>td.hall, .table>tfoot>tr>td.hall {
     padding: 6px;
     line-height: 1.42857143;
@@ -8,74 +7,57 @@
     text-align: center;
 }
 
-.table>thead>tr>td.lsurround, .table>tbody>tr>td.lsurround, .table>tfoot>tr>td.lsurround
+.room
+{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.lsurround
 {
     background-image: url(../images/left_room.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
 }
 
-.table>thead>tr>td.rsurround, .table>tbody>tr>td.rsurround, .table>tfoot>tr>td.rsurround
+.rsurround
 {
     background-image: url(../images/right_room.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
-
 }
 
-.table>thead>tr>td.lnone, .table>tbody>tr>td.lnone, .table>tfoot>tr>td.lnone
+.lnone
 {
     background-image: url(../images/left_none.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
-
 }
 
-.table>thead>tr>td.rnone, .table>tbody>tr>td.rnone, .table>tfoot>tr>td.rnone
+.rnone
 {
     background-image: url(../images/right_none.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
-
 }
 
-span.previous
+.previous
 {
     padding: 5px 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px 15px;
 }
 
-span.previous.green
+.green
 {
     background-image: url(../images/green.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 15px 15px;
 }
 
-span.previous.yellow
+.yellow
 {
     background-image: url(../images/yellow.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 15px 15px;
 }
 
-span.previous.red
+.red
 {
     background-image: url(../images/red.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 15px 15px;
 }
 
-span.previous.empty
+.empty
 {
     background-image: url(../images/empty.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 15px 15px;
 }

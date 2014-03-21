@@ -70,13 +70,13 @@
 					echo ("<tr>\n");
 				}
 				if($state == 1)
-					$this->buildString("<td class=\"success ");
+					$this->buildString("<td class=\"success room ");
 				elseif($state == 2)
-					$this->buildString("<td class=\"warning ");
+					$this->buildString("<td class=\"warning room ");
 				elseif($state == 3)
-					$this->buildString("<td class=\"danger ");
+					$this->buildString("<td class=\"danger room ");
 				else
-					$this->buildString("<td class=\"info ");
+					$this->buildString("<td class=\"info room ");
 				
 				if($state < 4)
 				{

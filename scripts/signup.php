@@ -3,11 +3,11 @@
   session_start();
 
   // Connect to database
-  mysql_connect("localhost", "ryana3", "sturman");
+  mysql_connect("localhost", "root", "sturman");
   mysql_select_db("ryana3_test")or die("cannot select DB");
   
   // assign username and password variables
-  $myusername = $_POST['username']; 
+  $myusername = strtolower($_POST['username']); 
   $mypassword = $_POST['password']; 
 
   // Protect against MySQL injection

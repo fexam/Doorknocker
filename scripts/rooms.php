@@ -22,7 +22,7 @@
 
 		function buildString($s)
 		{
-			$this->builder = $this->builder . $s . "\n";
+			$this->builder = $this->builder . $s;
 		}
 
 		function addToString($before, $s)
@@ -86,24 +86,24 @@
 						$this->buildString("rsurround\" id=\"$number\" note=\"$note\" date=\"$date\">");
 
 					$this->buildString("<a data-toggle=\"modal\" href=\"#myModal\" onclick=\"setModal($number)\">");
-					$this->buildString("<span>$number</span></a>");
+					$this->buildString("<span>$number</span></a>\n");
 					$this->buildString("<span class=\"previous ");
-					if($state1 == 0) $this->buildString("empty\"></span>");
-					else if($state1 == 1) $this->buildString("green\"></span>");
-					else if($state1 == 2) $this->buildString("yellow\"></span>");
-					else if($state1 == 3) $this->buildString("red\"></span>");
+					if($state1 == 0) $this->buildString("empty\"></span>\n");
+					else if($state1 == 1) $this->buildString("green\"></span>\n");
+					else if($state1 == 2) $this->buildString("yellow\"></span>\n");
+					else if($state1 == 3) $this->buildString("red\"></span>\n");
 
 					$this->buildString("<span class=\"previous ");
-					if($state2 == 0) $this->buildString("empty\"></span>");
-					else if($state2 == 1) $this->buildString("green\"></span>");
-					else if($state2 == 2) $this->buildString("yellow\"></span>");
-					else if($state2 == 3) $this->buildString("red\"></span>");
+					if($state2 == 0) $this->buildString("empty\"></span>\n");
+					else if($state2 == 1) $this->buildString("green\"></span>\n");
+					else if($state2 == 2) $this->buildString("yellow\"></span>\n");
+					else if($state2 == 3) $this->buildString("red\"></span>\n");
 					
 					$this->buildString("<span class=\"previous ");
-					if($state3 == 0) $this->buildString("empty\"></span>");
-					else if($state3 == 1) $this->buildString("green\"></span>");
-					else if($state3 == 2) $this->buildString("yellow\"></span>");
-					else if($state3 == 3) $this->buildString("red\"></span>");
+					if($state3 == 0) $this->buildString("empty\"></span>\n");
+					else if($state3 == 1) $this->buildString("green\"></span>\n");
+					else if($state3 == 2) $this->buildString("yellow\"></span>\n");
+					else if($state3 == 3) $this->buildString("red\"></span>\n");
 				}
 				else
 				{
@@ -113,11 +113,11 @@
 						$this->buildString("rnone\">");
 				}
 
-				$this->buildString("</td>");
+				$this->buildString("</td>\n");
 				if($counter == 0)
 				{
 					$this->addToString(FALSE, $this->builder);
-					$this->addToString($rotate , "<td class=\"hall\"></td>");
+					$this->addToString($rotate , "<td class=\"hall\"></td>\n");
 					if($left == 0)
 						$left=1;
 					else

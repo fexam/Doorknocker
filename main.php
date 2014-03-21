@@ -119,7 +119,7 @@
               	<?php include 'scripts/buttons.php'; ?>
               </div>
               <table class="table">
-              	<?php include 'scripts/rooms.php'; ?>
+              	<?php if($_SESSION['dorm'] != "No Dorm Selected") include 'scripts/rooms.php'; ?>
               </table>
             </div>
           </div><!--/span-->
@@ -172,7 +172,7 @@
   	      </div>
   	      <div class="modal-footer">
   	        <a data-dismiss="modal" class="btn btn-default">Close</a>
-  	        <a data-dismiss="modal" class="btn btn-danger" onclick="saveModal()" type="submit">Save changes</a>
+  	        <a data-dismiss="modal" class="btn btn-danger" type="submit">Save changes</a>
   	      </div>
         </form>
 	    </div>

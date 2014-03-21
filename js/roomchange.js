@@ -77,7 +77,7 @@ function markAll()
 			$.post('/scripts/saveallrooms.php', post_data,
 			function(response)
 			{
-				if(response == "bad")
+				if(response.indexOf("mysql_connect()") > 0)
 				{
 					alert("Could not save. Contact administrator.");
 					badDB = true;
@@ -105,7 +105,7 @@ $("a[type=submit]").click(function()
 	$.post('scripts/saveroom.php?check=true', post_data,
 	function(response)
 	{
-		if(response == "bad")
+		if(response.indexOf("mysql_connect()") > 0)
 			alert("Could not save. Contact administrator.");
 		else
 		{
@@ -118,7 +118,7 @@ $("a[type=submit]").click(function()
 			$.post('scripts/saveroom.php', post_data,
 			function(response)
 			{
-				if(response == "bad")
+				if(response.indexOf("mysql_connect()") > 0)
 					alert("Could not save. Contact administrator.");
 			});
 		}

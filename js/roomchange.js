@@ -65,33 +65,34 @@ function markAll()
 {
 	var today = currentDate()
 	var elements = $('table').children('tbody').children('tr').children('td');
-	var badDB = false;
 
-	for(var i=0; i<elements.length; i++)
+	$.post('scripts/saveallrooms.php?check=true', "",
+	function(response)
 	{
-		var classes = elements[i].getAttribute("class").split(" ");
-		if(badDB == false && classes[0] != "hall" && classes[2] != 'rnone' && classes[2] != 'rnone')
+		if(response.indexOf("mysql_connect()") > 0)
+			alert("Could not save. Contact administrator.");
+		else
 		{
-			var id = elements[i].getAttribute("id");
-			var post_data = "room=" + id + "&date=" + today;
-			$.post('/scripts/saveallrooms.php', post_data,
-			function(response)
+			for(var i=0; i<elements.length; i++)
 			{
-				if(response.indexOf("mysql_connect()") > 0)
+				var classes = elements[i].getAttribute("class").split(" ");
+				counter++;
+				if(classes[0] != "hall" && classes[2] != 'rnone' && classes[2] != 'rnone')
 				{
-					alert("Could not save. Contact administrator.");
-					badDB = true;
-				}
-				else
-					badDB = false;
-			});
-			if(badDB == false)
-			{
-				elements[i].setAttribute("class", "danger room " + classes[2]);
-				elements[i].setAttribute("date", today);
+					var id = elements[i].getAttribute("id");
+					var post_data = "room=" + id + "&date=" + today;
+					$.post('/scripts/saveallrooms.php', post_data,
+					function(response)
+					{
+						if(response.indexOf("mysql_connect()") > 0)
+							alert("Could not save. Contact administrator.");
+					});
+					elements[i].setAttribute("class", "danger room " + classes[2]);
+					elements[i].setAttribute("date", today);
+				}	
 			}
 		}
-	}
+	});
 }
 
 $("a[type=submit]").click(function()

@@ -2,6 +2,12 @@
 	ob_start();
 	session_start();
 
+	if(isset($_GET['check']))
+	{
+		mysql_connect("localhost", "ryana3", "sturman") or die("bad");
+		return true;
+	}
+
 	// Connect to database
   	mysql_connect("localhost", "ryana3", "sturman") or die("bad");
 	mysql_select_db("ryana3_test") or die("bad");

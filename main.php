@@ -130,55 +130,55 @@
       </footer>
     </div><!--/container-->
 
-	<div class="modal fade" id="myModal" aria-hidden="false" style="display: none; z-index: 1050;">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-        <form id="room_save">
-    		  <div class="modal-header">
-    		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    		    <h4 class="modal-title" id="popover_room" name="room">Room Number Here</h4>
-    		  </div>
-  		    <div class="container"></div>
-  		    <div class="modal-body">
-  		      <div class="radio">
-  		        <label>
-  		          <input type="radio" name="optionsRadios" id="radio1" value="green" checked>
-  		          Green - Considering
-  		        </label>
-  		      </div>
-  		      <div class="radio">
-  		        <label>
-  		          <input type="radio" name="optionsRadios" id="radio2" value="yellow">
-  		          Yellow - Neutral
-  		        </label>
-  		      </div>
-  		      <div class="radio">
-  		        <label>
-  		          <input type="radio" name="optionsRadios" id="radio3" value="red">
-  		          Red - Not Interested
-  		        </label>
-  		      </div>
-  		      <div class="radio">
-  		      <label>
-  		        <input type="radio" name="optionsRadios" id="radio4" value="gray">
-  		        Gray - Needs Visiting
-  		      </label>
-  		    </div>
-          <label>Notes:</label>
-          <input name="notes" type="text" id="note">
-          <br>
-          <br>
-          <p id="modified">Last Modified: 3/12/14</p>
-  	      </div>
-  	      <div class="modal-footer">
-  	        <a data-dismiss="modal" class="btn btn-default">Close</a>
-  	        <a data-dismiss="modal" class="btn btn-danger" type="submit">Save changes</a>
-  	      </div>
-        </form>
-	    </div>
-	  </div>
-	</div>
-
+  	<div class="modal fade" id="myModal" aria-hidden="false" style="display: none; z-index: 1050;">
+  	  <div class="modal-dialog">
+  	    <div class="modal-content">
+          <form id="room_save">
+      		  <div class="modal-header">
+      		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      		    <h4 class="modal-title" id="popover_room" name="room">Room Number Here</h4>
+      		  </div>
+    		    <div class="container"></div>
+    		    <div class="modal-body">
+    		      <div class="radio">
+    		        <label>
+    		          <input type="radio" name="optionsRadios" id="radio1" value="green" checked>
+    		          Green - Considering
+    		        </label>
+    		      </div>
+    		      <div class="radio">
+    		        <label>
+    		          <input type="radio" name="optionsRadios" id="radio2" value="yellow">
+    		          Yellow - Neutral
+    		        </label>
+    		      </div>
+    		      <div class="radio">
+    		        <label>
+    		          <input type="radio" name="optionsRadios" id="radio3" value="red">
+    		          Red - Not Interested
+    		        </label>
+    		      </div>
+    		      <div class="radio">
+    		      <label>
+    		        <input type="radio" name="optionsRadios" id="radio4" value="gray">
+    		        Gray - Needs Visiting
+    		      </label>
+    		    </div>
+            <label>Notes:</label>
+            <input name="notes" type="text" id="note">
+            <br>
+            <br>
+            <p id="modified">Last Modified: 3/12/14</p>
+    	      </div>
+    	      <div class="modal-footer">
+    	        <a data-dismiss="modal" class="btn btn-default">Close</a>
+    	        <a data-dismiss="modal" class="btn btn-danger" type="submit">Save changes</a>
+    	      </div>
+          </form>
+  	    </div>
+  	  </div>
+  	</div>
+    
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

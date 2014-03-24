@@ -1,0 +1,5 @@
+http://doorknocker.myrpi.org/scripts/android/login.php?username=hancom&password=test
+
+returns:
+“true” - login is good
+“false” - login failed

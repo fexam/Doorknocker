@@ -66,7 +66,7 @@ function markAll()
 	var today = currentDate()
 	var elements = $('table').children('tbody').children('tr').children('td');
 
-	$.post('scripts/saveallrooms.php?check=true', "",
+	$.post('scripts/database.php', "",
 	function(response)
 	{
 		if(response.indexOf("mysql_connect()") > 0)
@@ -103,7 +103,7 @@ $("a[type=submit]").click(function()
 
 	post_data = post_data + "&room=" + text + "&date=" + currentDate();
 	
-	$.post('scripts/saveroom.php?check=true', post_data,
+	$.post('scripts/database.php', "",
 	function(response)
 	{
 		if(response.indexOf("mysql_connect()") > 0)

@@ -1,5 +1,6 @@
 <?php
   session_start();
-  session_destroy();
-  header("location:../index.php");
+  include 'auth-class.php';
+  $auth = new Auth();
+  $auth->logout();
 ?>

@@ -1,6 +1,7 @@
 <?php
   ob_start();
   session_start();
+  include 'auth-class.php';
 
   // Connect to database
   mysql_connect("localhost", "ryana3", "sturman");
@@ -21,11 +22,10 @@
   $results = mysql_query($sql);
   $count = mysql_num_rows($results);
 
+  $auth = new Auth();
   if($count == 1)
   {
-    $_SESSION['username'] = $myusername;
-    $_SESSION['password'] = $mypassword;
-    header("location:../main.php");
+    $auth->login($myusername, $mypassword);
   }
   else
   {

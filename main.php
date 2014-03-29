@@ -1,40 +1,31 @@
 <?php
   session_start();
-  if(!isset($_SESSION['username']) || !isset($_SESSION['password']))
+  include 'scripts/auth-class.php';
+  include 'scripts/floor-class.php';
+  $auth = new Auth();
+  $floor = new Floor();
+  
+  if(!$auth->isLoggedIn())
     header("location:index.php");
   elseif(isset($_GET['switch']))
   {
-    $_SESSION['dorm'] = $_GET['dorm'];
-    $_SESSION['floor'] = $_GET['floor'];
-    $_SESSION['max'] = $_GET['max'];
-    $_SESSION['wing'] = $_GET['wing'];
-    $_SESSION['max_wing'] = $_GET['max_wing'];
-    header("location:main.php");
+    $floor->switchFloors($_GET['dorm'], $_GET['floor'], $_GET['max'], $_GET['wing'], $_GET['max_wing']);
   }
   elseif(isset($_GET['floor']))
   {
-  	$_SESSION['floor'] = $_GET['floor'];
-  	header("location:main.php");
+  	$floor->setFloor($_GET['floor']);
   }
   elseif(isset($_GET['wing']))
   {
-  	$_SESSION['wing'] = $_GET['wing'];
-  	header("location:main.php");
+    $floor->setWing($_GET['wing']);
   }
   elseif(isset($_GET['rotate']))
   {
-  	$_SESSION['rotate'] = $_GET['rotate'];
-  	header("location:main.php");
+  	$floor->setRotate($_GET['rotate']);
   }
   elseif(!isset($_SESSION['dorm']))
   {
-  	// Give it default values
-  	$_SESSION['dorm'] = "No Dorm Selected";
-  	$_SESSION['floor'] = -1;
-  	$_SESSION['max'] = 0;
-  	$_SESSION['wing'] = "Z";
-  	$_SESSION['rotate'] = false;
-  	$_SESSION['max_wing'] = "Z";
+    $floor->initialize();
   }
 ?>
 <!DOCTYPE html>
@@ -79,29 +70,6 @@
 	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=A&max_wing=B">Floor 3 - (301 - 315)</a></li>
 	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=B&max_wing=B">Floor 3 - (314 - 331)</a></li>
 	          </ul>
-	        </li>
-	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Crockett Hall <b class="caret"></b></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="#">Floor 1 - (101 - 115)</a></li>
-	            <li><a href="#">Floor 1 - (114 - 130)</a></li>
-	            <li><a href="#">Floor 2 - (201 - 215)</a></li>
-	            <li><a href="#">Floor 2 - (214 - 229)</a></li>
-	            <li><a href="#">Floor 3 - (301 - 315)</a></li>
-	            <li><a href="#">Floor 3 - (314 - 331)</a></li>
-	          </ul>
-	        </li>
-	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hall Hall <b class="caret"></b></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="#">Floor 1 - (101 - 115)</a></li>
-	            <li><a href="#">Floor 1 - (114 - 130)</a></li>
-	            <li><a href="#">Floor 2 - (201 - 215)</a></li>
-	            <li><a href="#">Floor 2 - (214 - 231)</a></li>
-	            <li><a href="#">Floor 3 - (301 - 315)</a></li>
-	            <li><a href="#">Floor 3 - (314 - 331)</a></li>
-	          </ul>
-	        </li>
           </ul>
         </div><!-- /.nav-header -->
       </div><!-- /.container -->
@@ -112,14 +80,16 @@
         <div class="col-xs-12 col-sm-9">
           <div class="row">
             <div class="col-6 col-sm-6 col-lg-4">
-              <?php
-              	echo("<h3>" . $_SESSION['dorm'] . "</h3>");
-              ?>
+              <h3>
+                <?php
+                	echo($_SESSION['dorm']);
+                ?>
+              </h3>
               <div class="btn-group btn-group-justified" style="padding-bottom:15px">
               	<?php include 'scripts/buttons.php'; ?>
               </div>
               <table class="table">
-              	<?php if($_SESSION['dorm'] != "No Dorm Selected") include 'scripts/rooms.php'; ?>
+              	<?php if($floor->printFloor()) include 'scripts/rooms.php'; ?>
               </table>
             </div>
           </div><!--/span-->

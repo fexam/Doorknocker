@@ -1,10 +1,15 @@
 <?php
   session_start();
-  if(isset($_SESSION['username']) && isset($_SESSION['password']))
+  include 'scripts/auth-class.php';
+  $auth = new Auth();
+  
+  // If logged in, go to the main page
+  if($auth->isLoggedIn())
   {
     header("location:main.php");
   }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

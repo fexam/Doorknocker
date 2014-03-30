@@ -1,0 +1,19 @@
+database conventions
+
+cycle of the modified field
+1.) database information pulled from server, initalizing database as the user dorm-storms. (no need to get ALL data)
+2.) as changes are made updates are made to the local database and modified flags are set to 1 accordingly.
+3.) if the server can be reached, the modified data is sent and it is up to the server to decide if it wants to accept it or not. 
+    SQLite is far too crippled to make advanced SQL calls such as comparing dates. When sent the database is updated so that modified = 0 again. 
+    However, the data is kept until it can be sent.
+
+example scenerio:
+- p1 rushes cary and enters data. His phone then immediatly turns his wifi off.
+- p2 rushes cary the next day and dosn't see any of p1's data. Oh well... dorm storm anyways.
+2 situations:
+   one -- p1 rushes cary again before internet is fixed
+      - p1 rushes cary again and dosn't see p2's data because he still has unique data and his internet is still off. Rewrites database locally, erassing the origional data.
+      - p1 relizes he turned his wifi off and enables it. Sever gets the new data from p1's most recent dorm-storm, but not from his first. That data is lost.
+   two -- p1 dosn't rush carry again before internet is fixed 
+      - p1 fixes his internet after p2 has rushed cary and the modified data is finally submitted.
+      - the server compares the time stamps and realizes the data it already has is the most recent. It discards P1's information for cary (?).

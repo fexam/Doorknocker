@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.doorknocker;
 
 import android.text.Editable;
 import android.text.format.Time;
@@ -8,7 +8,7 @@ import android.text.format.Time;
  */
 public class Room {
     private int number;
-    private String name;
+    private String dormName;
     private String full_name;
     private String note;
     private String time;
@@ -21,18 +21,18 @@ public class Room {
     public Room(String na,int n)
     {
         this.number = n;
-        this.name = na;
+        this.dormName = na;
         this.full_name = na + " " + Integer.toString(n);
         this.note ="-";
         this.time ="-";
         this.status = 3;
     }
 
-    public Room(int n, String na, String no, String t, int s)
+    public Room(int roomNumber, String dorm, String no, String t, int s)
     {
-        this.number = n;
-        this.name = na;
-        this.full_name = na + " " + Integer.toString(n);
+        this.number = roomNumber;
+        this.dormName = dorm;
+        this.full_name = dorm + " " + Integer.toString(roomNumber);
         this.note = no;
         this.time = t;
         this.status = s;
@@ -41,7 +41,7 @@ public class Room {
     public void setNumber(int n)
     { this.number = n; }
     public void setName(String n)
-    { this.name = n; }
+    { this.dormName = n; }
     public void setFull_name(String n)
     { this.full_name = n; }
     public void setNote(String n)
@@ -54,7 +54,7 @@ public class Room {
     public int getNumber()
     { return this.number; }
     public String getName()
-    { return this.name; }
+    { return this.dormName; }
     public String getFull_name()
     { return this.full_name; }
     public String getNote()

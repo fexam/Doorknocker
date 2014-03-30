@@ -9,6 +9,7 @@ class Auth
 
   public function isLoggedIn()
   {
+    // make sure a username and password exists
     if(isset($_SESSION['username']) && isset($_SESSION['password']))
       return true;
     else
@@ -17,6 +18,7 @@ class Auth
 
   public function login($username, $password)
   {
+    // set the global username and password
     $_SESSION['username'] = $username;
     $_SESSION['password'] = $password;
     header("location:../main.php");
@@ -24,6 +26,7 @@ class Auth
 
   public function logout()
   {
+    // erase all saved global data
     session_destroy();
     header("location:../index.php");
   }

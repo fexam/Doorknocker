@@ -1,6 +1,7 @@
 <?php
   session_start();
 
+  // down floor button
   echo("<div class=\"btn-group\">");
   if($_SESSION['floor'] > 1)
     echo("<a href=\"?floor=" . ($_SESSION['floor']-1) . "\" class=\"btn btn-danger\">Down Floor</a>");
@@ -8,6 +9,7 @@
     echo("<button type\"button\" class=\"btn btn-danger\" disabled=\"disabled\">Down Floor</button>");
   echo("</div>");
 
+  // up floor button
   echo("<div class=\"btn-group\">");
   if($_SESSION['floor'] < $_SESSION['max'] && $_SESSION['floor'] >= 1)
     echo("<a href=\"?floor=" . ($_SESSION['floor']+1) . "\" class=\"btn btn-danger\">Up Floor</a>");
@@ -15,6 +17,7 @@
     echo("<button type\"button\" class=\"btn btn-danger\" disabled=\"disabled\">Up Floor</button>");
   echo("</div>");
 
+  // group of buttons for flip floor, switch wings, and mark all rooms
   echo("<div class=\"btn-group\">");
   if($_SESSION['floor'] >= 1)
     echo("<button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\">");

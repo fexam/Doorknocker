@@ -1,3 +1,4 @@
+/* setting how the hall columns are displayed */
 .table>thead>tr>td.hall, .table>tbody>tr>td.hall, .table>tfoot>tr>td.hall {
     padding: 6px;
     line-height: 1.42857143;
@@ -7,57 +8,51 @@
     text-align: center;
 }
 
-.room
-{
+/* how the background should be displayed */
+.room {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
 }
 
-.lsurround
-{
+/* setting room background images */
+.lsurround {
     background-image: url(../images/left_room.png);
 }
 
-.rsurround
-{
+.rsurround {
     background-image: url(../images/right_room.png);
 }
 
-.lnone
-{
+.lnone {
     background-image: url(../images/left_none.png);
 }
 
-.rnone
-{
+.rnone {
     background-image: url(../images/right_none.png);
 }
 
-.previous
-{
+/* how the history background should be displayed */
+.previous {
     padding: 5px 10px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 15px 15px;
 }
 
-.green
-{
+/* setting room history images */
+.green {
     background-image: url(../images/green.png);
 }
 
-.yellow
-{
+.yellow {
     background-image: url(../images/yellow.png);
 }
 
-.red
-{
+.red {
     background-image: url(../images/red.png);
 }
 
-.empty
-{
+.empty {
     background-image: url(../images/empty.png);
 }

@@ -17,7 +17,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DoorKnocker Signin</title>
-
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/signin.css" rel="stylesheet">
 
@@ -33,6 +32,7 @@
       <form class="form-signin" role="form" action='scripts/login.php' method='post'>
         <h2 class="form-signin-heading">Please sign in</h2>
         <?php
+          // Display error message if login has failed
           if(isset($_SESSION['fail_login']) && $_SESSION['fail_login'] == TRUE)
           {
             unset($_SESSION['fail_login']);

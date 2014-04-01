@@ -25,13 +25,15 @@ public class databaseHelper extends SQLiteOpenHelper {
   private static final String DATABASE_NAME = "myDoorknocker";
   private static final String KEY_DORM = "dormName";
   private static final String KEY_ROOM = "room_number";
+  private static final String KEY_FLOOR = "dormFloor";
+  private static final String KEY_WING = "dormWing";
   private static final String KEY_STATUS = "state";
   private static final String KEY_DATE = "date";
   private static final String KEY_NOTES = "notes";
   private static final String KEY_MODIFIED = "modified";
-  private static final String[] COLUMNS = {KEY_DORM, KEY_ROOM, KEY_STATUS, KEY_DATE, KEY_NOTES, KEY_MODIFIED};
+  private static final String[] COLUMNS = {KEY_DORM, KEY_ROOM, KEY_FLOOR, KEY_WING, KEY_STATUS, KEY_DATE, KEY_NOTES, KEY_MODIFIED};
   // Incremement Database_Version manually any time the database's layout is modified.
-  private static final int DATABASE_VERSION = 6;
+  private static final int DATABASE_VERSION = 7;
 
 
   /* Methods required for an sqlite database to be implemented */
@@ -46,6 +48,8 @@ public class databaseHelper extends SQLiteOpenHelper {
     database.execSQL("create table " + DATABASE_NAME +
         " ( " + KEY_DORM + " text not null," +
         KEY_ROOM + " integer not null," +
+        KEY_FLOOR + " integer," +
+        KEY_WING + " text," +
         KEY_STATUS + " integer not null," +
         KEY_DATE + " text, " +
         KEY_NOTES + " text, " +
@@ -156,27 +160,39 @@ public class databaseHelper extends SQLiteOpenHelper {
     }
 
   /* Purpose: returns a list of all of the rooms in the database */
-  public List<Room> getAllRooms() {
+  public List<Room> selectRooms(String dorm, int floor, String wing) {
         List<Room> rooms = new LinkedList<Room>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT  * FROM " + DATABASE_NAME, null);
+        Cursor cursor = db.rawQuery("SELECT  * FROM " + DATABASE_NAME +
+            " WHERE " + KEY_DORM + "='" + dorm +"' AND "
+            + KEY_FLOOR + "='" + floor +"' AND "
+            + KEY_WING + "='" + wing +"'", null);
 
-        Room room = null;
+
+      Room room = null;
         if (cursor.moveToFirst()) {
             do {
                 room = new Room();
                 room.setName(cursor.getString(0));
                 room.setNumber(Integer.parseInt(cursor.getString(1)));
                 room.setFull_name(cursor.getString(0) + " " + Integer.parseInt(cursor.getString(1)) );
-                room.setStatus(Integer.parseInt(cursor.getString(2)));
-                room.setTime(cursor.getString(3));
-                room.setNote(cursor.getString(4));
+                room.setStatus(Integer.parseInt(cursor.getString(4)));
+                room.setTime(cursor.getString(5));
+                room.setNote(cursor.getString(6));
 
-                rooms.add(room);
+                 Log.d("TESTING", "0:" + cursor.getString(0)  +
+                        "\n1:" + cursor.getString(1) +
+                        "\n2:" + cursor.getString(2) +
+                        "\n3:" + cursor.getString(3) +
+                        "\n4:" + cursor.getString(4) +
+                        "\n5:" + cursor.getString(5) +
+                        "\n6:" + cursor.getString(6) +
+                        "\n7:" + cursor.getString(7));
+
+              rooms.add(room);
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllRooms()", rooms.toString());
         return rooms;
     }
 
@@ -234,6 +250,8 @@ public class databaseHelper extends SQLiteOpenHelper {
                 /* insert dorm name and set modified to 0. If the web site's data is
                    used to update the local database, the local database isn't modified */
                 CV.put(KEY_DORM, hall);
+                CV.put(KEY_FLOOR, floor);
+                CV.put(KEY_WING, wing);
                 CV.put(KEY_MODIFIED, 0);
                 toReturn.add(CV);
             }
@@ -272,6 +290,7 @@ public class databaseHelper extends SQLiteOpenHelper {
   public int syncDB(String hall, Integer floor, String wing){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> CVList = getContentValuesList(hall, floor, wing);
+        printContentValueList(CVList);
 
         for (int i = 0; i < CVList.size(); i++) {
             ContentValues CV = new ContentValues();

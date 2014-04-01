@@ -79,7 +79,7 @@ function markAll()
 	var today = currentDate()
 	var elements = $('table').children('tbody').children('tr').children('td');
 
-	$.post('scripts/database.php', "",
+	$.post('scripts/database-class.php', "connect=yes",
 	function(response)
 	{
 		// make sure the database is online
@@ -125,7 +125,7 @@ $("a[type=submit]").click(function()
 	// begin creating POST request
 	post_data = post_data + "&room=" + text + "&date=" + currentDate();
 	
-	$.post('scripts/database.php', "",
+	$.post('scripts/database-class.php', "connect=yes",
 	function(response)
 	{
 		// make sure the database is online

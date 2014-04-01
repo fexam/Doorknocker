@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="#fff3c5">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        >
+    <TextView
+        android:id="@+id/Room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Room: "
+        />
+    <TextView
+        android:id="@+id/Room_Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hall 301"
+        android:layout_gravity="center"
+        />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status:"
+        android:layout_gravity="center"
+        />
+    <RadioGroup
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:background="#000"
+        android:padding="1dp"
+        >
+        <RadioButton
+            android:id="@+id/available"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Accept"
+
+            android:background="#00ff0a" />
+        <RadioButton
+            android:id="@+id/pending"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Pending"
+            android:background="#fff000" />
+        <RadioButton
+            android:id="@+id/reject"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Reject"
+            android:background="#ff0000" />
+        <RadioButton
+            android:id="@+id/unvisited"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Unvisited"
+            android:background="#FFF"
+            />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note: "
+            />
+        <EditText
+            android:id="@+id/Note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Additional comment"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last updated: "
+            />
+        <TextView
+            android:id="@+id/last_updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        >
+
+        <Button
+            android:id="@+id/dialog_confirm"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text = "Confirm"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:layout_marginRight="3dp"
+            />
+        <Button
+            android:id="@+id/dialog_cancel"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text = "Cancel"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:layout_marginLeft="3dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

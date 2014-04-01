@@ -1,12 +1,15 @@
 <?php
   session_start();
   include 'scripts/auth-class.php';
+  include_once 'scripts/page-class.php';
+
   $auth = new Auth();
-  
+  $home = new Page("main.php");
+
   // If logged in, go to the main page
   if($auth->isLoggedIn())
   {
-    header("location:main.php");
+    $home->redirect();
   }
 ?>
 <!DOCTYPE html>

@@ -2,10 +2,12 @@
   ob_start();
   session_start();
   include 'auth-class.php';
+  include 'database-class.php';
+  include_once 'page-class.php';
 
-  // C=connect to database
-  mysql_connect("localhost", "ryana3", "sturman");
-  mysql_select_db("ryana3_test")or die("cannot select DB");
+  // Connect to database
+  $db = new Database();
+  $db->connect();
   
   // assign username and password variables
   $myusername = strtolower($_POST['username']); 
@@ -24,6 +26,7 @@
 
   // check if no accounts were returned
   $auth = new Auth();
+  $sign = new Page("../signup.php");
   if($count == 0 && $myusername != "" && $mypassword != "")
   {
     // login and add to the database
@@ -34,6 +37,6 @@
   else
   {
   	$_SESSION['fail_signup'] = TRUE;
-  	header("location:../signup.php");
+  	$sign->redirect();
   }
 ?>

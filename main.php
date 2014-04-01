@@ -2,11 +2,14 @@
   session_start();
   include 'scripts/auth-class.php';
   include 'scripts/floor-class.php';
+  include_once 'scripts/page-class.php';
+
   $auth = new Auth();
   $floor = new Floor();
-  
+  $home = new Page("index.php");
+
   if(!$auth->isLoggedIn())
-    header("location:index.php");
+    $home->redirect();
   elseif(isset($_GET['switch']))
   {
     $floor->switchFloors($_GET['dorm'], $_GET['floor'], $_GET['max'], $_GET['wing'], $_GET['max_wing']);

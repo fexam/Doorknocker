@@ -2,10 +2,12 @@
   ob_start();
   session_start();
   include 'auth-class.php';
+  include 'database-class.php';
+  include_once 'page-class.php';
 
   // connect to database
-  mysql_connect("localhost", "ryana3", "sturman");
-  mysql_select_db("ryana3_test")or die("cannot select DB");
+  $db = new Database();
+  $db->connect();
   
   // assign username and password variables
   $myusername = $_POST['username']; 
@@ -24,6 +26,7 @@
 
   // check if only one account was returned
   $auth = new Auth();
+  $home = new Page("../index.php");
   if($count == 1)
   {
     $auth->login($myusername, $mypassword);
@@ -31,6 +34,6 @@
   else
   {
   	$_SESSION['fail_login'] = TRUE;
-  	header("location:../index.php");
+  	$home->redirect();
   }
 ?>

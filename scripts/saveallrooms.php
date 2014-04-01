@@ -1,10 +1,11 @@
 <?php
 	ob_start();
 	session_start();
-
+	include 'database-class.php';
+	
 	// connect to database
-  	mysql_connect("localhost", "ryana3", "sturman") or die("bad");
-	mysql_select_db("ryana3_test") or die("bad");
+  	$db = new Database();
+  	$db->connect();
 
 	$room = $_POST['room'];
 	$date = $_POST['date'];

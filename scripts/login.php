@@ -2,6 +2,7 @@
   ob_start();
   session_start();
   include 'auth-class.php';
+  include_once 'page-class.php';
 
   // connect to database
   mysql_connect("localhost", "ryana3", "sturman");
@@ -24,6 +25,7 @@
 
   // check if only one account was returned
   $auth = new Auth();
+  $home = new Page("../index.php");
   if($count == 1)
   {
     $auth->login($myusername, $mypassword);
@@ -31,6 +33,6 @@
   else
   {
   	$_SESSION['fail_login'] = TRUE;
-  	header("location:../index.php");
+  	$home->redirect();
   }
 ?>

@@ -1,10 +1,16 @@
 <?php
 
+include_once 'page-class.php';
+
 class Auth
 {
+  private $main;
+  private $home;
+
   public function __construct()
   {
-    // nothing to initialize
+    $this->main = new Page("../main.php");
+    $this->home = new Page("../index.php");
   }
 
   public function isLoggedIn()
@@ -21,14 +27,14 @@ class Auth
     // set the global username and password
     $_SESSION['username'] = $username;
     $_SESSION['password'] = $password;
-    header("location:../main.php");
+    $this->main->redirect();
   }
 
   public function logout()
   {
     // erase all saved global data
     session_destroy();
-    header("location:../index.php");
+    $this->home->redirect();
   }
 }
 

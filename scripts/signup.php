@@ -2,6 +2,7 @@
   ob_start();
   session_start();
   include 'auth-class.php';
+  include_once 'page-class.php';
 
   // C=connect to database
   mysql_connect("localhost", "ryana3", "sturman");
@@ -24,6 +25,7 @@
 
   // check if no accounts were returned
   $auth = new Auth();
+  $sign = new Page("../signup.php");
   if($count == 0 && $myusername != "" && $mypassword != "")
   {
     // login and add to the database
@@ -34,6 +36,6 @@
   else
   {
   	$_SESSION['fail_signup'] = TRUE;
-  	header("location:../signup.php");
+  	$sign->redirect();
   }
 ?>

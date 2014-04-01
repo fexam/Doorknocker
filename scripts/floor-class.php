@@ -1,10 +1,14 @@
 <?php
 
+include_once 'page-class.php';
+
 class Floor
 {
+  private $page;
+
   public function __construct()
   {
-    // nothing to initialize
+    $this->page = new Page("main.php");
   }
 
   public function initialize()
@@ -26,28 +30,28 @@ class Floor
     $_SESSION['max'] = $max;
     $_SESSION['wing'] = $wing;
     $_SESSION['max_wing'] = $max_wing;
-    header("location:main.php");
+    $this->page->redirect();
   }
 
   public function setFloor($floor)
   {
     // set global floor parameter
     $_SESSION['floor'] = $floor;
-    header("location:main.php");
+    $this->page->redirect();
   }
 
   public function setWing($wing)
   {
     // set global wing parameter
     $_SESSION['wing'] = $wing;
-    header("location:main.php");
+    $this->page->redirect();
   }
 
   public function setRotate($rotate)
   {
     // set global rotate parameter
     $_SESSION['rotate'] = $rotate;
-    header("location:main.php");
+    $this->page->redirect();
   }
 
   public function printFloor()

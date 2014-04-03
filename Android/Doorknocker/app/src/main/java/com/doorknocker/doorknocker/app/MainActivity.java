@@ -30,7 +30,9 @@ public class MainActivity extends ActionBarActivity {
     public Spinner spin1, spin2;
     private ArrayList<DormList> dl = new ArrayList<DormList>();
     private String[] floorList={"Basement","1st floor","2nd floor","3rd floor","4th floor"};
-
+    private databaseHelper db;
+    private List<Room> currentWorkingRoom;
+    //*** TO DO LIST INSIDE THE METHOD
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,14 @@ public class MainActivity extends ActionBarActivity {
         StrictMode.setThreadPolicy(policy);
     }
 
+    //*** TO DO LIST INSIDE THE METHOD
     /* Purpose: initiate all the necessary variables
         and show the floor plan window
     * */
     protected void onCreateAfterLogin(){
+        db = new databaseHelper(this);
+        //TO DO: delete this After local database fully sync with web server
+        db.deleteAllRooms();
         setContentView(R.layout.activity_main);
         for(int i=0;i<id.dorm_list.length;i++)
         {
@@ -152,10 +158,22 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    public void updateLocal(){
+        if(currentWorkingRoom!=null){
+        for(Room r:currentWorkingRoom){
+            String fullName = r.getFull_name();
+            fullName = fullName.replace(" Hall","");
+            if(r.getNumber()!=0){
+                db.updateRoom(roomList.get(id.getRoomID(fullName) ) );
+            }
+        }}
+    }
+
     /* Purpose: get the data from the web server and using that data to update the
         RoomList
     * */
-    public void updateRoomList(DormList d){
+     public void updateRoomList(DormList d){
+
         websiteCom com = new websiteCom();
         String strWing ="";
         if(d.getWing()==1){
@@ -164,43 +182,18 @@ public class MainActivity extends ActionBarActivity {
             strWing ="B";
         }
         String strDorm = d.getDorm() +" Hall";
-        String temp = com.getString(strDorm,d.getFloor(),strWing);
-        if(temp.equalsIgnoreCase("No rows found, nothing to print. Exiting now."))
-        {
-            return;
+
+        currentWorkingRoom = db.selectRooms(strDorm,d.getFloor(),strWing);
+
+        if(currentWorkingRoom.isEmpty()) {
+            db.syncDB(strDorm,d.getFloor(),strWing);
+            currentWorkingRoom = db.selectRooms(strDorm,d.getFloor(),strWing);
         }
-        temp = temp.replace("[","");
-        temp = temp.replace("]","");
-        temp = temp.replace("{","&");
-        temp = temp.replace("}","");
-        temp = temp.replace("\"","");
-        String str[] = temp.split("&");
-        for(int i=1;i<str.length;i++)
-        {
-            //update room
-            System.out.println(str[i]);
-            String split2[] = str[i].split(",");
-            System.out.println(split2.length);
-            String roomNumber[] = split2[0].split(":");
-            String state[] = split2[1].split(":");
-            String dates[] = split2[2].split(":");
-            String notes[] = split2[3].split(":");
-            String fullName = d.getDorm()+" "+roomNumber[1];
-            String date,note;
-            if(dates.length==1){
-                date="-";
-            }else{
-                date=dates[1].replace("\\","");
-            }
-            if(notes.length==1){
-                note="-";
-            }else{
-                note=notes[1];
-            }
-            if(!roomNumber[1].equalsIgnoreCase("0")) {
-                Room r = new Room(d.getDorm(), Integer.parseInt(roomNumber[1]),
-                        Integer.parseInt(state[1]), date, note);
-                roomList.set(id.getRoomID(fullName), r);
+        for(Room r:currentWorkingRoom){
+            if(r.getNumber()!=0){
+                Room temp_r = new Room(r.getName().replace(" Hall",""),r.getNumber(),
+                        r.getStatus(),r.getTime(),r.getNote());
+                roomList.set(id.getRoomID(temp_r.getFull_name()), r);
             }
         }
     }
@@ -233,6 +226,7 @@ public class MainActivity extends ActionBarActivity {
             if(d.equalsIgnoreCase(dd.getDorm())&&floor==dd.getFloor()&&wing==dd.getWing()) {
                 //update & synch with server here
                 if(sync) {
+                    updateLocal();
                     updateRoomList(dd);
                 }
                 dd.Create(rotate,flip);

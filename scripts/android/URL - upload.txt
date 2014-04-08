@@ -1,0 +1,7 @@
+http://doorknocker.myrpi.org/scripts/android/upload.php
+
+Reference this example: http://mongskiewl.wordpress.com/2013/10/16/sending-json-data-from-android-to-a-php-script/
+
+Requires two POST entities:
+dorm_name: (ex. Cary Hall);
+json: (all json data from the local database)

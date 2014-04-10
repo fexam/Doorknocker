@@ -64,7 +64,66 @@
           <ul class="nav navbar-nav">
             <li><a href="scripts/logout.php">Sign Out</a></li>
             <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cary Hall <b class="caret"></b></a>
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">BARH-A<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=BARH-A&floor=1&max=4&wing=A&max_wing=B">Floor 1 - (102 - 112)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-A&floor=2&max=4&wing=A&max_wing=B">Floor 2 - (201 - 212)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-A&floor=3&max=4&wing=A&max_wing=B">Floor 3 - (301 - 311)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-A&floor=4&max=4&wing=A&max_wing=B">Floor 4 - (401 - 412)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-A&floor=4&max=4&wing=B&max_wing=B">Floor 4 - (413 - 423)</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">BARH-B<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=BARH-B&floor=1&max=3&wing=A&max_wing=A">Floor 1 - (102 - 111)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-B&floor=2&max=3&wing=A&max_wing=A">Floor 2 - (201 - 211)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-B&floor=3&max=3&wing=A&max_wing=A">Floor 3 - (301 - 311)</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">BARH-C<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=BARH-C&floor=1&max=3&wing=A&max_wing=A">Floor 1 - (101 - 110)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-C&floor=2&max=3&wing=A&max_wing=A">Floor 2 - (201 - 212)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-C&floor=3&max=3&wing=A&max_wing=A">Floor 3 - (301 - 312)</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">BARH-D<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=BARH-D&floor=1&max=4&wing=A&max_wing=B">Floor 1 - (101 - 112)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-D&floor=2&max=4&wing=A&max_wing=B">Floor 2 - (201 - 212)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-D&floor=3&max=4&wing=A&max_wing=B">Floor 3 - (301 - 311)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-D&floor=4&max=4&wing=A&max_wing=B">Floor 4 - (401 - 412)</a></li>
+	            <li><a href="?switch=true&dorm=BARH-D&floor=4&max=4&wing=B&max_wing=B">Floor 4 - (413 - 424)</a></li>
+	          </ul>
+	        </li>
+            <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bray Hall<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=Bray%20Hall&floor=1&max=3&wing=A&max_wing=B">Floor 1 - (101 - 115)</a></li>
+	            <li><a href="?switch=true&dorm=Bray%20Hall&floor=1&max=3&wing=B&max_wing=B">Floor 1 - (114 - 130)</a></li>
+	            <li><a href="?switch=true&dorm=Bray%20Hall&floor=2&max=3&wing=A&max_wing=B">Floor 2 - (201 - 215)</a></li>
+	            <li><a href="?switch=true&dorm=Bray%20Hall&floor=2&max=3&wing=B&max_wing=B">Floor 2 - (214 - 231)</a></li>
+	            <li><a href="?switch=true&dorm=Bray%20Hall&floor=3&max=3&wing=A&max_wing=B">Floor 3 - (301 - 315)</a></li>
+	            <li><a href="?switch=true&dorm=Bray%20Hall&floor=3&max=3&wing=B&max_wing=B">Floor 3 - (314 - 331)</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Barton Hall<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=Barton%20Hall&floor=1&max=4&wing=A&max_wing=B">Floor 1 - (1120 - 1130)</a></li>
+	            <li><a href="?switch=true&dorm=Barton%20Hall&floor=2&max=4&wing=A&max_wing=B">Floor 2 - (2120 - 2217)</a></li>
+	            <li><a href="?switch=true&dorm=Barton%20Hall&floor=2&max=4&wing=B&max_wing=B">Floor 2 - (2320 - 2417)</a></li>
+	            <li><a href="?switch=true&dorm=Barton%20Hall&floor=3&max=4&wing=A&max_wing=B">Floor 3 - (3120 - 3217)</a></li>
+	            <li><a href="?switch=true&dorm=Barton%20Hall&floor=3&max=4&wing=B&max_wing=B">Floor 3 - (3320 - 3417)</a></li>
+	            <li><a href="?switch=true&dorm=Barton%20Hall&floor=4&max=4&wing=A&max_wing=B">Floor 4 - (4120 - 4217)</a></li>
+	            <li><a href="?switch=true&dorm=Barton%20Hall&floor=4&max=4&wing=B&max_wing=B">Floor 4 - (4320 - 4417)</a></li>
+	          </ul>
+	        </li>
+            <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cary Hall<b class="caret"></b></a>
 	          <ul class="dropdown-menu">
 	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=A&max_wing=B">Floor 1 - (101 - 115)</a></li>
 	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=1&max=3&wing=B&max_wing=B">Floor 1 - (114 - 130)</a></li>
@@ -73,6 +132,40 @@
 	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=A&max_wing=B">Floor 3 - (301 - 315)</a></li>
 	            <li><a href="?switch=true&dorm=Cary%20Hall&floor=3&max=3&wing=B&max_wing=B">Floor 3 - (314 - 331)</a></li>
 	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Crockett Hall<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=Crockett%20Hall&floor=1&max=3&wing=A&max_wing=B">Floor 1 - (101 - 115)</a></li>
+	            <li><a href="?switch=true&dorm=Crockett%20Hall&floor=1&max=3&wing=B&max_wing=B">Floor 1 - (114 - 130)</a></li>
+	            <li><a href="?switch=true&dorm=Crockett%20Hall&floor=2&max=3&wing=A&max_wing=B">Floor 2 - (201 - 215)</a></li>
+	            <li><a href="?switch=true&dorm=Crockett%20Hall&floor=2&max=3&wing=B&max_wing=B">Floor 2 - (214 - 231)</a></li>
+	            <li><a href="?switch=true&dorm=Crockett%20Hall&floor=3&max=3&wing=A&max_wing=B">Floor 3 - (301 - 315)</a></li>
+	            <li><a href="?switch=true&dorm=Crockett%20Hall&floor=3&max=3&wing=B&max_wing=B">Floor 3 - (314 - 331)</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hall Hall<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=Hall%20Hall&floor=1&max=3&wing=A&max_wing=B">Floor 1 - (101 - 115)</a></li>
+	            <li><a href="?switch=true&dorm=Hall%20Hall&floor=1&max=3&wing=B&max_wing=B">Floor 1 - (114 - 130)</a></li>
+	            <li><a href="?switch=true&dorm=Hall%20Hall&floor=2&max=3&wing=A&max_wing=B">Floor 2 - (201 - 215)</a></li>
+	            <li><a href="?switch=true&dorm=Hall%20Hall&floor=2&max=3&wing=B&max_wing=B">Floor 2 - (214 - 231)</a></li>
+	            <li><a href="?switch=true&dorm=Hall%20Hall&floor=3&max=3&wing=A&max_wing=B">Floor 3 - (301 - 315)</a></li>
+	            <li><a href="?switch=true&dorm=Hall%20Hall&floor=3&max=3&wing=B&max_wing=B">Floor 3 - (314 - 331)</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nason Hall<b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="?switch=true&dorm=Nason%20Hall&floor=1&max=3&wing=A&max_wing=B">Floor 1 - (101 - 115)</a></li>
+	            <li><a href="?switch=true&dorm=Nason%20Hall&floor=1&max=3&wing=B&max_wing=B">Floor 1 - (114 - 130)</a></li>
+	            <li><a href="?switch=true&dorm=Nason%20Hall&floor=2&max=3&wing=A&max_wing=B">Floor 2 - (201 - 215)</a></li>
+	            <li><a href="?switch=true&dorm=Nason%20Hall&floor=2&max=3&wing=B&max_wing=B">Floor 2 - (214 - 231)</a></li>
+	            <li><a href="?switch=true&dorm=Nason%20Hall&floor=3&max=3&wing=A&max_wing=B">Floor 3 - (301 - 315)</a></li>
+	            <li><a href="?switch=true&dorm=Nason%20Hall&floor=3&max=3&wing=B&max_wing=B">Floor 3 - (314 - 331)</a></li>
+	          </ul>
+	        </li>
           </ul>
         </div><!-- /.nav-header -->
       </div><!-- /.container -->

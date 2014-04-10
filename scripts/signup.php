@@ -27,11 +27,14 @@
   // check if no accounts were returned
   $auth = new Auth();
   $sign = new Page("../signup.php");
+  $salt = 'hello_1m_@_SaLT';
+  $password = hash('sha256', $mypassword . $salt);
+  
   if($count == 0 && $myusername != "" && $mypassword != "")
   {
     // login and add to the database
     $auth->login($myusername, $mypassword);
-    $command = "INSERT INTO members (username, password) VALUES ('$myusername', '$mypassword');";
+    $command = "INSERT INTO members (username, password) VALUES ('$myusername', '$password');";
     mysql_query($command);
   }
   else

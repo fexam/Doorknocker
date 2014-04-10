@@ -19,8 +19,11 @@
   $myusername = mysql_real_escape_string($myusername);
   $mypassword = mysql_real_escape_string($mypassword);
 
+  $salt = 'hello_1m_@_SaLT';
+  $password = hash('sha256', $mypassword . $salt);
+  
   // create and execute query
-  $sql = "SELECT * FROM members WHERE username='$myusername' and password='$mypassword';";
+  $sql = "SELECT * FROM members WHERE username='$myusername' and password='$password';";
   $results = mysql_query($sql);
   $count = mysql_num_rows($results);
 

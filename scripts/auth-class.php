@@ -16,7 +16,7 @@ class Auth
   public function isLoggedIn()
   {
     // make sure a username and password exists
-    if(isset($_SESSION['username']) && isset($_SESSION['password']))
+    if(isset($_SESSION['username']))
       return true;
     else
       return false;
@@ -26,7 +26,6 @@ class Auth
   {
     // set the global username and password
     $_SESSION['username'] = $username;
-    $_SESSION['password'] = $password;
     $this->main->redirect();
   }
 

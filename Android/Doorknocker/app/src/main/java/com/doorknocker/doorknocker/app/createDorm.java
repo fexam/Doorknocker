@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by nutjung on 3/16/14.
  */
-public class createDorm extends Dorm implements DormList {
+public class createDorm extends methodDorm implements DormList {
 
 
     private String left ="left", right="right";
@@ -108,6 +108,71 @@ public class createDorm extends Dorm implements DormList {
             else if(i==22+(floor*100)){
                 buildOpenRoom("Rest room",right,true);
             }
+        }
+    }
+
+    public void buildBartonFirstFloorWing1(){
+        buildLayout();
+        for(int i=1120;i<=1130;i+=2){
+            buildNormalRoom(i,left);
+        }
+        buildWalkWay();
+        for(int i=1121;i<=1131;i+=2){
+            buildEmptyRoom(right);
+        }
+    }
+
+    public void buildBartonOtherFloorWing1(){
+        buildLayout();
+        int f=100,s=200;
+
+        for(int i=30+(floor*1000)+f;i>=20+(floor*1000)+f;i-=2){
+            buildNormalRoom(i,right);
+        }
+        for(int i=11+(floor*1000)+s;i<=17+(floor*1000)+s;i+=2){
+            if(i==11+(floor*1000)+s||(floor==2&&i<2217)){
+                buildEmptyRoom(right);
+            }else{
+                buildNormalRoom(i,right);
+            }
+        }
+        buildWalkWay();
+        for(int i=29+(floor*1000)+f;i>=19+(floor*1000)+f;i-=2){
+            if(i>21+(floor*1000)+f){
+                buildNormalRoom(i,left);
+            }else{
+                buildEmptyRoom(left);
+            }
+        }
+        for(int i=10+(floor*1000)+s;i<=16+(floor*1000)+s;i+=2){
+            buildNormalRoom(i,left);
+        }
+    }
+
+    public void buildBartonOtherFloorWing2(){
+        buildLayout();
+        int f=300,s=400;
+
+        for(int i=30+(floor*1000)+f;i>=20+(floor*1000)+f;i-=2){
+            buildNormalRoom(i,left);
+        }
+        for(int i=10+(floor*1000)+s;i<=16+(floor*1000)+s;i+=2){
+            if(i==10+(floor*1000)+s||(floor==2&&i<2216)){
+                buildEmptyRoom(left);
+            }else {
+                buildNormalRoom(i,left);
+            }
+        }
+        buildWalkWay();
+        for(int i=29+(floor*1000)+f;i>=19+(floor*1000)+f;i-=2){
+            if(i>21+(floor*1000)+f){
+                buildNormalRoom(i,right);
+            }else{
+                buildEmptyRoom(right);
+            }
+        }
+        for(int i=11+(floor*1000)+s;i<=17+(floor*1000)+s;i+=2){
+            buildNormalRoom(i,right);
         }
     }
 
@@ -476,9 +541,9 @@ public class createDorm extends Dorm implements DormList {
     }
 
     public boolean isFreshmenHill(){
-        if(this.dorm.equalsIgnoreCase("Bray")||this.dorm.equalsIgnoreCase("Hall")
-                ||this.dorm.equalsIgnoreCase("Cary")||this.dorm.equalsIgnoreCase("Nason")
-                ||this.dorm.equalsIgnoreCase("Crockett")){
+        if(this.dormName.equalsIgnoreCase("Bray")||this.dormName.equalsIgnoreCase("Hall")
+                ||this.dormName.equalsIgnoreCase("Cary")||this.dormName.equalsIgnoreCase("Nason")
+                ||this.dormName.equalsIgnoreCase("Crockett")){
             return true;
         }
         return false;
@@ -512,7 +577,17 @@ public class createDorm extends Dorm implements DormList {
                     buildFreshmenHillSecondThirdFloorWing2();
                 }
             }
-        }else if(dorm.equalsIgnoreCase("Blitman")){
+        }else if(dormName.equalsIgnoreCase("Barton")){
+            if(floor==1){
+                buildBartonFirstFloorWing1();
+            }else{
+                if(wing==1){
+                    buildBartonOtherFloorWing1();
+                }else{
+                    buildBartonOtherFloorWing2();
+                }
+            }
+        }else if(dormName.equalsIgnoreCase("Blitman")){
             if(floor==1){
                 if(wing==1){
                     buildBlitmanFirstFloorWing1();
@@ -526,7 +601,7 @@ public class createDorm extends Dorm implements DormList {
                     buildBlitmanOtherFloorWing2();
                 }
             }
-        }else if(dorm.equalsIgnoreCase("BARHA")){
+        }else if(dormName.equalsIgnoreCase("BARHA")){
             if(floor==1){
                 buildBARHAFirstFloor();
             }else if(floor==2){
@@ -540,7 +615,7 @@ public class createDorm extends Dorm implements DormList {
                     buildBARHAForthFloorWing2();
                 }
             }
-        }else if(dorm.equalsIgnoreCase("BARHB")){
+        }else if(dormName.equalsIgnoreCase("BARHB")){
             if(floor==1){
                 buildBARHBFirstFloor();
             }else if(floor==2){
@@ -548,7 +623,7 @@ public class createDorm extends Dorm implements DormList {
             }else if(floor==3){
                 buildBARHBThirdFloor();
             }
-        }else if(dorm.equalsIgnoreCase("BARHC")){
+        }else if(dormName.equalsIgnoreCase("BARHC")){
             if(floor==1){
                 buildBARHCFirstFloor();
             }else if(floor==2){
@@ -556,7 +631,7 @@ public class createDorm extends Dorm implements DormList {
             }else if(floor==3){
                 buildBARHCThirdFloor();
             }
-        }else if(dorm.equalsIgnoreCase("BARHD")){
+        }else if(dormName.equalsIgnoreCase("BARHD")){
             if(floor==1){
                 buildBARHDFirstFloor();
             }else if(floor==2){
@@ -573,17 +648,17 @@ public class createDorm extends Dorm implements DormList {
         }else{
             //Quad case
             if(floor==1||floor==2){
-                if(dorm.equalsIgnoreCase("Quad Roebling")||dorm.equalsIgnoreCase("Quad HuntII")||
-                        dorm.equalsIgnoreCase(("Quad ChurchIII"))){
-                    if(dorm.equalsIgnoreCase("Quad HuntII")){
+                if(dormName.equalsIgnoreCase("Quad Roebling")||dormName.equalsIgnoreCase("Quad HuntII")||
+                        dormName.equalsIgnoreCase(("Quad ChurchIII"))){
+                    if(dormName.equalsIgnoreCase("Quad HuntII")){
                         buildQuadHuntIISecondFloor();
-                    }else if(dorm.equalsIgnoreCase("Quad Roebling")){
+                    }else if(dormName.equalsIgnoreCase("Quad Roebling")){
                         if(floor==1){
                             buildQuadRoeblingFirstFloor();
                         }else{
                             buildQuadRoeblingSecondFloor();
                         }
-                    }else if(dorm.equalsIgnoreCase("Quad ChurchIII")){
+                    }else if(dormName.equalsIgnoreCase("Quad ChurchIII")){
                         if(floor==1){
                             buildQuadChurchIIIFirstFloor();
                         }else{
@@ -594,7 +669,7 @@ public class createDorm extends Dorm implements DormList {
                     buildQuadNormalFirstSecondFloor();
                 }
             }else if(floor==3){
-                //not yet implemented
+                //we decide to not do the quad third floor
             }
         }
     }

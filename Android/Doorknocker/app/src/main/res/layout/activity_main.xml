@@ -65,24 +65,25 @@
                 android:layout_height="wrap_content"
                 android:text="N"/>
             </RadioGroup>
-        <Button
-            android:id="@+id/GoButton"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Ro"
-            android:layout_gravity="center_vertical"
-            android:onClick="onClickRotate"
-            android:layout_weight="1"
-            ></Button>
-        <Button
-            android:id="@+id/RotateButton"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Flip"
-            android:layout_gravity="center_vertical"
-            android:onClick="onClickFlip"
-            android:layout_weight="1"
-            ></Button>
+            <LinearLayout
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                android:layout_marginLeft="5dp"
+                >
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Option"
+                    android:onClick="onClickDropDown"
+                />
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerOption"
+                />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

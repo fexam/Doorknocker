@@ -1,6 +1,8 @@
 package com.doorknocker.doorknocker.app;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -27,7 +29,7 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<Room> roomList = new ArrayList<Room>();
     private ID id = new ID();
     private boolean rotate = false, flip=false;
-    public Spinner spin1, spin2;
+    public Spinner spin1, spin2,spin3;
     private ArrayList<DormList> dl = new ArrayList<DormList>();
     private String[] floorList={"Basement","1st floor","2nd floor","3rd floor","4th floor"};
     private databaseHelper db;
@@ -63,6 +65,7 @@ public class MainActivity extends ActionBarActivity {
         }
         addDormOnSpinner1();
         addFloorOnSpinner2("BARH A");
+        addSpinnerOption();
         spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -99,7 +102,6 @@ public class MainActivity extends ActionBarActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.WingGroup);
@@ -110,6 +112,23 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         addDormList();
+        spin3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String temp = (String) adapterView.getItemAtPosition(i);
+                adapterView.setSelection(0);
+                if(temp.equalsIgnoreCase("Rotate")){
+                    onClickRotate(view);
+                }else if(temp.equalsIgnoreCase("Flip")){
+                    onClickFlip(view);
+                }else if(temp.equalsIgnoreCase("Mark All")){
+                    onClickMarkAll(view);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
 
     @Override
@@ -132,32 +151,9 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /* Purpose: response to rotate button to rotate the floor plan 90 degree
-    * */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onClickRotate(View view){
-        if(!rotate){
-        rotate = true;
-        ScrollView temp = (ScrollView) findViewById(R.id.scrollView);
-        RelativeLayout.LayoutParams layoutParams
-                = (RelativeLayout.LayoutParams) temp.getLayoutParams();
-        layoutParams.setMargins(0,80,0,80);
-        temp.setLayoutParams(layoutParams);
-        temp.setRotation(270);
-        updateLayout(false);
-        }
-        else{
-        rotate = false;
-        ScrollView temp = (ScrollView) findViewById(R.id.scrollView);
-        RelativeLayout.LayoutParams layoutParams
-                = (RelativeLayout.LayoutParams) temp.getLayoutParams();
-        layoutParams.setMargins(0,0,0,0);
-        temp.setLayoutParams(layoutParams);
-        temp.setRotation(0);
-        updateLayout(false);
-        }
-    }
 
+    /* Purpose: sync the working memory with local database
+    * */
     public void updateLocal(){
         if(currentWorkingRoom!=null){
         for(Room r:currentWorkingRoom){
@@ -234,6 +230,48 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /* Purpose: response to rotate button to rotate the floor plan 90 degree
+        * */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void onClickRotate(View view){
+        if(!rotate){
+            rotate = true;
+            ScrollView temp = (ScrollView) findViewById(R.id.scrollView);
+            RelativeLayout.LayoutParams layoutParams
+                    = (RelativeLayout.LayoutParams) temp.getLayoutParams();
+            layoutParams.setMargins(0,80,0,80);
+            temp.setLayoutParams(layoutParams);
+            temp.setRotation(270);
+            updateLayout(false);
+        }
+        else{
+            rotate = false;
+            ScrollView temp = (ScrollView) findViewById(R.id.scrollView);
+            RelativeLayout.LayoutParams layoutParams
+                    = (RelativeLayout.LayoutParams) temp.getLayoutParams();
+            layoutParams.setMargins(0,0,0,0);
+            temp.setLayoutParams(layoutParams);
+            temp.setRotation(0);
+            updateLayout(false);
+        }
+    }
+
+    /* Purpose: mark all the room red
+    * */
+    public void onClickMarkAll(View view){
+        if(currentWorkingRoom!=null){
+            for(Room r:currentWorkingRoom){
+                String fullName = r.getFull_name();
+                fullName = fullName.replace(" Hall","");
+                if(r.getNumber()!=0){
+                    Room temp = roomList.get(id.getRoomID(fullName));
+                    temp.setStatus(2); // 2 = red
+                    roomList.set(id.getRoomID(fullName),temp);
+                }
+            }}
+        updateLayout(true);
+    }
+
     /* Purpose: response to the flip button to flip all rooms left-right
     * */
     public void onClickFlip(View view){
@@ -265,6 +303,27 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    public void onClickDropDown(final View view){
+        String[] items = new String[] {"Rotate","Flip","Mark All"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line,items);
+        new AlertDialog.Builder(this)
+                .setTitle("Option")
+                .setAdapter(adapter, new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(i==0){
+                            onClickRotate(view);
+                        }else if(i==1){
+                            onClickFlip(view);
+                        }else if(i==2){
+                            onClickMarkAll(view);
+                        }
+                    }
+                }).create().show();
+    }
+
     /* Purpose: add all the dorms' name to the spinner1
     * */
     public void addDormOnSpinner1(){
@@ -274,6 +333,7 @@ public class MainActivity extends ActionBarActivity {
         list.add("BARH B");
         list.add("BARH C");
         list.add("BARH D");
+        list.add("Barton");
         list.add("Blitman");
         list.add("Bray");
         list.add("Cary");
@@ -319,11 +379,26 @@ public class MainActivity extends ActionBarActivity {
         spin2.setAdapter(dataAdapter);
     }
 
+    /* Purpose: add option spinner
+    * */
+    public void addSpinnerOption(){
+        spin3 = (Spinner) findViewById(R.id.spinnerOption);
+        List<String> list = new ArrayList<String>();
+        list.add(" ");
+        list.add("Rotate");
+        list.add("Flip");
+        list.add("Mark All");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin3.setAdapter(dataAdapter);
+    }
+
     /* Purpose: get the number of floor from the given dorm name
     * */
     public int numberFloor(String dormName){
         if(dormName.equalsIgnoreCase("BARH A")||dormName.equalsIgnoreCase("BARH D")
-                ||dormName.equalsIgnoreCase("Blitman")){
+                ||dormName.equalsIgnoreCase("Blitman")||dormName.equalsIgnoreCase("Barton")){
             return 4;
         }
         return 3;
@@ -341,6 +416,9 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         if(dormName.equalsIgnoreCase("BARH D")&&floor.equalsIgnoreCase("4th floor")){
+            return true;
+        }
+        if(dormName.equalsIgnoreCase("Barton")&&!floor.equalsIgnoreCase("1st floor")){
             return true;
         }
         return false;
@@ -365,6 +443,13 @@ public class MainActivity extends ActionBarActivity {
         dl.add(new createDorm("BARHD",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("BARHD",4,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("BARHD",4,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
+        dl.add(new createDorm("Barton",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
+        dl.add(new createDorm("Barton",2,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
+        dl.add(new createDorm("Barton",2,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
+        dl.add(new createDorm("Barton",3,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
+        dl.add(new createDorm("Barton",3,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
+        dl.add(new createDorm("Barton",4,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
+        dl.add(new createDorm("Barton",4,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("Blitman",1,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("Blitman",1,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("Blitman",2,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));

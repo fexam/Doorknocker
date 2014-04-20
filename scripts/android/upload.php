@@ -2,14 +2,13 @@
   if(isset($_POST["json"]))
   {
     $dorm = $_POST['dorm_name'];
-    $json = json_decode($_POST['json']);
-    $data = json_encode($json, true);
+    $json = json_decode($_POST['json'], true);
 
     // connect to database
     mysql_connect("localhost", "ryana3", "sturman");
     mysql_select_db("ryana3_test");
 
-    foreach($data as $row)
+    foreach($json as $row)
     {
       $room = $row['room_number'];
       $state = $row['state'];

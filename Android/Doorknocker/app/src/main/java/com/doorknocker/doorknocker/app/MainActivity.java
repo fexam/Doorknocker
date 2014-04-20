@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
         }
         addDormOnSpinner1();
         addFloorOnSpinner2("BARH A");
-        addSpinnerOption();
+
         spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -112,23 +112,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         addDormList();
-        spin3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String temp = (String) adapterView.getItemAtPosition(i);
-                adapterView.setSelection(0);
-                if(temp.equalsIgnoreCase("Rotate")){
-                    onClickRotate(view);
-                }else if(temp.equalsIgnoreCase("Flip")){
-                    onClickFlip(view);
-                }else if(temp.equalsIgnoreCase("Mark All")){
-                    onClickMarkAll(view);
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
     }
 
     @Override
@@ -377,21 +360,6 @@ public class MainActivity extends ActionBarActivity {
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin2.setAdapter(dataAdapter);
-    }
-
-    /* Purpose: add option spinner
-    * */
-    public void addSpinnerOption(){
-        spin3 = (Spinner) findViewById(R.id.spinnerOption);
-        List<String> list = new ArrayList<String>();
-        list.add(" ");
-        list.add("Rotate");
-        list.add("Flip");
-        list.add("Mark All");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin3.setAdapter(dataAdapter);
     }
 
     /* Purpose: get the number of floor from the given dorm name

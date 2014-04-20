@@ -78,11 +78,6 @@
                     android:text="Option"
                     android:onClick="onClickDropDown"
                 />
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinnerOption"
-                />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

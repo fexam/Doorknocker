@@ -1,4 +1,4 @@
-http://doorknocker.myrpi.org/scripts/android/upload.php
+http://doorknocker.myrpi.org/scripts/android/upload.php?dorm=Cary%20Hall
 
 Reference this example: http://mongskiewl.wordpress.com/2013/10/16/sending-json-data-from-android-to-a-php-script/
 

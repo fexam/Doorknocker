@@ -1,7 +1,7 @@
 <?php
   if(isset($_POST["json"]))
   {
-    $dorm = $_POST['dorm_name'];
+    $dorm = $_GET['dorm'];
     $json = json_decode($_POST['json'], true);
 
     // connect to database
@@ -25,5 +25,7 @@
       $sql = "UPDATE rooms SET state=$state, notes='$note', date='$date' WHERE id=$id;";
       mysql_query($sql);
     }
+
+    echo("Success");
   }
 ?>

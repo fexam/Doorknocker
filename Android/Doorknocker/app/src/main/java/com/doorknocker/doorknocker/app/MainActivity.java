@@ -21,6 +21,10 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +152,52 @@ public class MainActivity extends ActionBarActivity {
         }}
     }
 
+    /*Purpose: get dorm name to the format for Url*/
+    public String properCase(String inputVal){
+        if(inputVal.length()==0) return"";
+        if(inputVal.length()==1) return inputVal.toUpperCase();
+        return inputVal.substring(0,1).toUpperCase() +
+                inputVal.substring(1).toLowerCase();
+    }
+
+    /*Purpose: sync the working memory with web server*/
+    public void updateWebserver()  {
+        JSONArray toSend = new JSONArray();
+        JSONArray Url = new JSONArray();
+        if(currentWorkingRoom!=null){
+            String url = "http://doorknocker.myrpi.org/scripts/android/upload.php?dorm=";
+            String fName="";
+            for(Room r:currentWorkingRoom){
+                String fullName = r.getFull_name();
+                fName = fullName.split(" ")[0];
+                fullName = fullName.replace(" Hall","");
+                if(r.getNumber()!=0) {
+                    Room temp = roomList.get(id.getRoomID(fullName));
+                    if(fName.equalsIgnoreCase("")){
+                        fName = temp.getName();
+                    }
+                    JSONObject JObj = new JSONObject();
+                    try {
+                        JObj.put("room_number", Integer.toString(temp.getNumber()));
+                        JObj.put("state", Integer.toString(temp.getStatus()));
+                        JObj.put("date", temp.getTime());
+                        JObj.put("notes", temp.getNote());
+                        toSend.put(JObj);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            fName = properCase(fName);
+            fName += "%20Hall";
+            url += fName;
+            System.out.println(url);
+            Url.put(url);
+            JSonTransmitter transmitter = new JSonTransmitter();
+            transmitter.execute(toSend,Url);
+        }
+    }
+
     /* Purpose: get the data from the web server and using that data to update the
         RoomList
     * */
@@ -206,6 +256,7 @@ public class MainActivity extends ActionBarActivity {
                 //update & synch with server here
                 if(sync) {
                     updateLocal();
+                    updateWebserver();
                     updateRoomList(dd);
                 }
                 dd.Create(rotate,flip);

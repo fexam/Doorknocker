@@ -1,6 +1,6 @@
 <?php
   if(isset($_POST["json"]))
-  {
+  {    
     $dorm = $_GET['dorm'];
     $json = json_decode($_POST['json'], true);
 
@@ -12,6 +12,8 @@
     {
       $room = $row['room_number'];
       $state = $row['state'];
+      if($state != 4)
+			$state = ($state-1 == -1 ? $state=3 : $state-1);
       $date = $row['date'];
       $notes = $row['notes'];
 
@@ -25,7 +27,6 @@
       $sql = "UPDATE rooms SET state=$state, notes='$note', date='$date' WHERE id=$id;";
       mysql_query($sql);
     }
-
     echo("Success");
   }
 ?>

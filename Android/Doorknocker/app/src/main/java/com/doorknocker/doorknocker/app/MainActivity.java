@@ -21,10 +21,21 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,15 +49,10 @@ public class MainActivity extends ActionBarActivity {
     private String[] floorList={"Basement","1st floor","2nd floor","3rd floor","4th floor"};
     private databaseHelper db;
     private List<Room> currentWorkingRoom;
-    //*** TO DO LIST INSIDE THE METHOD
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        //TO DO: using AsyncTask instead of changing StrictMode
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
     }
 
     //*** TO DO LIST INSIDE THE METHOD
@@ -56,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreateAfterLogin(){
         db = new databaseHelper(this);
         //TO DO: delete this After local database fully sync with web server
-        db.deleteAllRooms();
+        //db.deleteAllRooms();
         setContentView(R.layout.activity_main);
         for(int i=0;i<id.dorm_list.length;i++)
         {
@@ -68,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
             roomList.add(r);
         }
         addDormOnSpinner1();
-        addFloorOnSpinner2("BARH A");
+        addFloorOnSpinner2("BARH A"); //show the first dorm
 
         spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -138,7 +144,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     /* Purpose: sync the working memory with local database
     * */
     public void updateLocal(){
@@ -193,6 +198,7 @@ public class MainActivity extends ActionBarActivity {
             url += fName;
             System.out.println(url);
             Url.put(url);
+            //connectWeb(toSend,Url);
             JSonTransmitter transmitter = new JSonTransmitter();
             transmitter.execute(toSend,Url);
         }
@@ -203,7 +209,6 @@ public class MainActivity extends ActionBarActivity {
     * */
      public void updateRoomList(DormList d){
 
-        websiteCom com = new websiteCom();
         String strWing ="";
         if(d.getWing()==1){
             strWing ="A";
@@ -211,13 +216,11 @@ public class MainActivity extends ActionBarActivity {
             strWing ="B";
         }
         String strDorm = d.getDorm() +" Hall";
-
+        //get data from the webserver and store in local database
+        db.syncDB(strDorm,d.getFloor(),strWing);
+        //get data from local database
         currentWorkingRoom = db.selectRooms(strDorm,d.getFloor(),strWing);
 
-        if(currentWorkingRoom.isEmpty()) {
-            db.syncDB(strDorm,d.getFloor(),strWing);
-            currentWorkingRoom = db.selectRooms(strDorm,d.getFloor(),strWing);
-        }
         for(Room r:currentWorkingRoom){
             if(r.getNumber()!=0){
                 Room temp_r = new Room(r.getName().replace(" Hall",""),r.getNumber(),
@@ -368,28 +371,11 @@ public class MainActivity extends ActionBarActivity {
         list.add("BARH C");
         list.add("BARH D");
         list.add("Barton");
-        list.add("Blitman");
         list.add("Bray");
         list.add("Cary");
         list.add("Crockett");
         list.add("Hall");
         list.add("Nason");
-        list.add("Quad Caldwell");
-        list.add("Quad ChurchI");
-        list.add("Quad ChurchII");
-        list.add("Quad ChurchIII");
-        list.add("Quad Copper");
-        list.add("Quad MacDonald");
-        list.add("Quad Roebling");
-        list.add("Quad Pardee");
-        list.add("Quad HuntI");
-        list.add("Quad HuntII");
-        list.add("Quad HuntIII");
-        list.add("Quad Buck");
-        list.add("Quad WhiteI");
-        list.add("Quad WhiteII");
-        list.add("Quad WhiteIII");
-        list.add("Quad WhiteIV");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -417,7 +403,7 @@ public class MainActivity extends ActionBarActivity {
     * */
     public int numberFloor(String dormName){
         if(dormName.equalsIgnoreCase("BARH A")||dormName.equalsIgnoreCase("BARH D")
-                ||dormName.equalsIgnoreCase("Blitman")||dormName.equalsIgnoreCase("Barton")){
+                ||dormName.equalsIgnoreCase("Barton")){
             return 4;
         }
         return 3;
@@ -428,7 +414,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean hasWing(String dormName,String floor){
         if(dormName.equalsIgnoreCase("Bray")||dormName.equalsIgnoreCase("Cary")
                 ||dormName.equalsIgnoreCase("Crockett")||dormName.equalsIgnoreCase("Hall")
-                ||dormName.equalsIgnoreCase("Nason")||dormName.equalsIgnoreCase("Blitman")) {
+                ||dormName.equalsIgnoreCase("Nason")) {
             return true;
         }
         if(dormName.equalsIgnoreCase("BARH A")&&floor.equalsIgnoreCase("4th floor")){
@@ -469,14 +455,6 @@ public class MainActivity extends ActionBarActivity {
         dl.add(new createDorm("Barton",3,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("Barton",4,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("Barton",4,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("Blitman",1,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("Blitman",1,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("Blitman",2,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("Blitman",2,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("Blitman",3,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("Blitman",3,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("Blitman",4,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("Blitman",4,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("BRAY",1,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("BRAY",1,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("BRAY",2,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
@@ -507,53 +485,5 @@ public class MainActivity extends ActionBarActivity {
         dl.add(new createDorm("NASON",2,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("NASON",3,1,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
         dl.add(new createDorm("NASON",3,2,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadCaldWell",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadCaldWell",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadCaldWell",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchI",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchI",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchI",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchII",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchII",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchII",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchIII",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchIII",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadChurchIII",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadCooper",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadCooper",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadCooper",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadMacDonald",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadMacDonald",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadMacDonald",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadRoebling",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadRoebling",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadRoebling",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadPardee",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadPardee",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadPardee",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadHuntI",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadHuntI",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadHuntI",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        //dl.add(new createDorm("QuadHuntII",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadHuntII",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadHuntII",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadHuntIII",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadHuntIII",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadHuntIII",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadBuck",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadBuck",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadBuck",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteI",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteI",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteI",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteII",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteII",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteII",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteIII",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteIII",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteIII",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteIV",1,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteIV",2,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
-        dl.add(new createDorm("QuadWhiteIV",3,0,MainActivity.this,(LinearLayout) findViewById(R.id.linearLayout2),roomList));
     }
 }

@@ -13,6 +13,7 @@ import org.json.JSONException;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Andrew on 3/27/14.
@@ -20,53 +21,27 @@ import java.io.InputStreamReader;
 public class websiteCom {
 
     private static final String baseURL = "http://doorknocker.myrpi.org/scripts/android/";
-
     /* the websiteCom class hides the baseURL that information is collected through and
        provides methods that interact directly with the website */
     public websiteCom() {
     }
 
-    /* Purpose: returns the response from the give URL as a string object */
-    private static String getString(String url){
-        InputStream inStream = null;
-        String result = "";
-
-        // HTTP
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet(url);
-        try {
-            HttpResponse response = httpclient.execute(httpget);
-            HttpEntity entity = response.getEntity();
-            inStream = entity.getContent();
-        } catch(Exception e) {
-            Log.e("exception", "failed to communicate with webpage: " + url, e);
-            return null;
-        }
-
-        // Read response to string
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inStream,"utf-8"),8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-            inStream.close();
-            result = sb.toString();
-        } catch(Exception e) {
-            Log.e("exception", "failed to translate response to string", e);
-            return null;
-        }
-        return result;
-    }
-
     /* Purpose: creates the url to access the data at the requred hall, floor, and wing,
            gets the text from said URL, and converts it into the JSONArray the string represents */
     public static JSONArray getJsonArr(String hall, int floor, String wing){
+        webConnection webCon = new webConnection();
         hall = hall.replaceAll(" ", "%20");
         String url = baseURL + "rooms.php?dorm=" + hall + "&floor=" + floor + "&wing=" + wing;
         JSONArray jsonArray = null;
-        String temp = getString(url);
+        //webCon.execute(url);
+        String temp = null;
+        try {
+            temp = webCon.execute(url).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             jsonArray = new JSONArray(temp);
         } catch(JSONException e) {
@@ -79,17 +54,34 @@ public class websiteCom {
     /* Purpose: creates the url to access the data at the request hall, floor, and wing,
         and gets the text from said URL*/
     public static String getString(String hall, int floor, String wing){
+        webConnection webCon = new webConnection();
         hall = hall.replaceAll(" ", "%20");
         String url = baseURL + "rooms.php?dorm=" + hall + "&floor=" + floor + "&wing=" + wing;
-        String temp = getString(url);
+        String temp = null;
+        try {
+            temp = webCon.execute(url).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return temp;
     }
 
     /* Purpose: contacts the server with the given username and password. Converts the servers
            string response to a boolean. */
     public static boolean authorizeUser(String username, String password){
+        webConnection webCon = new webConnection();
         String url = baseURL + "login.php?username=" + username + "&password=" + password;
-        if(getString(url).equalsIgnoreCase("true")){
+        String temp = null;
+        try {
+            temp = webCon.execute(url).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(temp.equalsIgnoreCase("true")){
             return true;
         }
         else {

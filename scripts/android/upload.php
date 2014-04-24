@@ -11,9 +11,15 @@
     foreach($json as $row)
     {
       $room = $row['room_number'];
-      $state = $row['state'];
-      if($state != 4)
-			$state = ($state-1 == -1 ? $state=3 : $state-1);
+      $s = $row['state'];
+      if($s == "0")
+        $state = 1;
+      else if($s == "1")
+        $state = 2;
+      else if($s == "2")
+        $state = 3;
+      else if($s == "3")
+        $state = 0;
       $date = $row['date'];
       $notes = $row['notes'];
 

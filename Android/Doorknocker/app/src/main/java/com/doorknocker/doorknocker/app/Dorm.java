@@ -14,22 +14,16 @@ import java.util.ArrayList;
 /**
  * Created by nutjung on 3/15/14.
  */
-public abstract class Dorm{
+public class Dorm{
 
     protected String dormName;
     protected int floor;
     protected int wing=0;
-    protected Activity c;
-    protected LinearLayout ll;
-    protected ArrayList<Room> roomList = new ArrayList<Room>();
 
-    public Dorm(String d,int f,int ww,Activity m,LinearLayout l,ArrayList<Room> r){
+    public Dorm(String d,int f,int ww){
         this.dormName=d;
         this.floor=f;
         this.wing=ww;
-        this.c=m;
-        this.ll=l;
-        this.roomList = r;
     }
 
     public void setDorm(String d) {

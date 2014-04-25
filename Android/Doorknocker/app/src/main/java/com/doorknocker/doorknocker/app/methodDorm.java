@@ -14,11 +14,8 @@ import java.util.ArrayList;
 /**
  * Created by nutjung on 4/10/14.
  */
-public class methodDorm {
+public abstract class methodDorm extends Dorm{
 
-    protected String dormName;
-    protected int floor;
-    protected int wing=0;
     protected Activity c;
     protected LinearLayout ll;
     protected boolean rotate = false;
@@ -29,11 +26,8 @@ public class methodDorm {
     protected LinearLayout lleft,lright,lcenter;
     protected int[] ColorList = {Color.GREEN,Color.YELLOW,Color.RED,Color.WHITE};
 
-
     public methodDorm(String d,int f,int ww,Activity m,LinearLayout l,ArrayList<Room> r){
-        this.dormName=d;
-        this.floor=f;
-        this.wing=ww;
+        super(d,f,ww);
         this.c=m;
         this.ll=l;
         this.roomList = r;
@@ -52,25 +46,6 @@ public class methodDorm {
         pb = new LinearLayout.LayoutParams(w, w);
         sm = new LinearLayout.LayoutParams(w,small);
 
-    }
-
-    public void setDorm(String d) {
-        this.dormName=d;
-    }
-    public void setFloor(int f){
-        this.floor=f;
-    }
-    public void setWing(int w){
-        this.wing=w;
-    }
-    public String getDorm(){
-        return this.dormName;
-    }
-    public int getFloor(){
-        return this.floor;
-    }
-    public int getWing(){
-        return this.wing;
     }
 
     protected void buildLayout(){

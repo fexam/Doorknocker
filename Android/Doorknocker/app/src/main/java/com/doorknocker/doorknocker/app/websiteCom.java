@@ -29,6 +29,12 @@ public class websiteCom {
     /* Purpose: creates the url to access the data at the requred hall, floor, and wing,
            gets the text from said URL, and converts it into the JSONArray the string represents */
     public static JSONArray getJsonArr(String hall, int floor, String wing){
+        if(wing.equalsIgnoreCase("")){
+            wing = "A";
+        }
+        if((hall.substring(0,4)).equalsIgnoreCase("BARH")){
+            hall = "BARH-"+hall.substring(4,5);
+        }
         webConnection webCon = new webConnection();
         hall = hall.replaceAll(" ", "%20");
         String url = baseURL + "rooms.php?dorm=" + hall + "&floor=" + floor + "&wing=" + wing;

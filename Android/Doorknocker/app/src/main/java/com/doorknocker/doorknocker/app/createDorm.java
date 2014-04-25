@@ -428,7 +428,7 @@ public class createDorm extends methodDorm implements DormList {
             }
         }
         buildWalkWay();
-        for(int i=202;i<=222;i+=2){
+        for(int i=202;i<=212;i+=2){
             buildNormalRoom(i,right);
         }
     }

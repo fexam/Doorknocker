@@ -43,12 +43,14 @@ public class MainActivity extends ActionBarActivity {
 
     private ArrayList<Room> roomList = new ArrayList<Room>();
     private ID id = new ID();
-    private boolean rotate = false, flip=false;
+    private boolean rotate = false, flip=false, modified = false;
+    private boolean radioChange=false;
     public Spinner spin1, spin2,spin3;
     private ArrayList<DormList> dl = new ArrayList<DormList>();
     private String[] floorList={"Basement","1st floor","2nd floor","3rd floor","4th floor"};
     private databaseHelper db;
-    private List<Room> currentWorkingRoom;
+    private ArrayList<Room> currentWorkingRoom = new ArrayList<Room>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreateAfterLogin(){
         db = new databaseHelper(this);
         //TO DO: delete this After local database fully sync with web server
-        //db.deleteAllRooms();
+        db.deleteAllRooms();
         setContentView(R.layout.activity_main);
         for(int i=0;i<id.dorm_list.length;i++)
         {
@@ -90,8 +92,9 @@ public class MainActivity extends ActionBarActivity {
         spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                radioChange=false;
                 String d = (String) spin1.getSelectedItem();
-
+                Boolean radioCheck =false;
                 String f = (String) adapterView.getItemAtPosition(i);
                 RadioButton sw = (RadioButton) findViewById(R.id.SWing);
                 RadioButton nw = (RadioButton) findViewById(R.id.NWing);
@@ -100,15 +103,20 @@ public class MainActivity extends ActionBarActivity {
                     nw.setEnabled(true);
                     if(!sw.isChecked()&&!nw.isChecked()){
                         sw.setChecked(true);
+                        radioCheck=true;
                     }
                 }
                 else{
-                    sw.setChecked(false);
-                    nw.setChecked(false);
+                    if(sw.isChecked()||nw.isChecked()){
+                        radioCheck=true;
+                    }
+                    ((RadioGroup) findViewById(R.id.WingGroup)).clearCheck();
                     sw.setEnabled(false);
                     nw.setEnabled(false);
                 }
-                updateLayout(true);
+                if(!radioChange) {
+                    updateLayout(true);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -119,6 +127,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 updateLayout(true);
+                radioChange=true;
             }
         });
         addDormList();
@@ -167,6 +176,7 @@ public class MainActivity extends ActionBarActivity {
 
     /*Purpose: sync the working memory with web server*/
     public void updateWebserver()  {
+        modified = false;
         JSONArray toSend = new JSONArray();
         JSONArray Url = new JSONArray();
         if(currentWorkingRoom!=null){
@@ -188,19 +198,42 @@ public class MainActivity extends ActionBarActivity {
                         JObj.put("date", temp.getTime());
                         JObj.put("notes", temp.getNote());
                         toSend.put(JObj);
+                        System.out.println("Posting: RoomName: " + fName + " Number :"
+                                + temp.getNumber() + " State: "+temp.getStatus()+
+                                " date: "+temp.getTime()+" notes: "+temp.getNote());
+                        System.out.println("RPosting: RoomName: " + fName + " Number :"
+                                + r.getNumber() + " State: "+r.getStatus()+
+                                " date: "+r.getTime()+" notes: "+r.getNote());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    if(temp.getNumber()!=r.getNumber()){
+                        System.out.print("*****SOMETHING DOES NOT RIGHT******");
+                    }
+                    if(temp.getStatus()!=r.getStatus()||temp.getNote().compareTo(r.getNote())!=0
+                            ||temp.getTime().compareTo(r.getTime())!=0){
+                        modified=true;
+                        System.out.println("*****MODIFIED******");
+                    }
                 }
             }
-            fName = properCase(fName);
-            fName += "%20Hall";
-            url += fName;
-            System.out.println(url);
-            Url.put(url);
-            //connectWeb(toSend,Url);
-            JSonTransmitter transmitter = new JSonTransmitter();
-            transmitter.execute(toSend,Url);
+            if(fName!="") {
+                if(fName.equalsIgnoreCase("BARHA")||fName.equalsIgnoreCase("BARHB")||
+                        fName.equalsIgnoreCase("BARHC")||fName.equalsIgnoreCase("BARHD")){
+                    fName = "BARH-"+fName.substring(4,5);
+                }else {
+                    fName = properCase(fName);
+                    fName += "%20Hall";
+                }
+                url += fName;
+                System.out.println(url);
+                Url.put(url);
+                if(modified){
+                    JSonTransmitter transmitter = new JSonTransmitter();
+                    transmitter.execute(toSend, Url);
+                    System.out.println("----Post----");
+                }
+            }
         }
     }
 
@@ -217,15 +250,22 @@ public class MainActivity extends ActionBarActivity {
         }
         String strDorm = d.getDorm() +" Hall";
         //get data from the webserver and store in local database
-        db.syncDB(strDorm,d.getFloor(),strWing);
-        //get data from local database
-        currentWorkingRoom = db.selectRooms(strDorm,d.getFloor(),strWing);
+        db.syncDB(strDorm, d.getFloor(), strWing);
 
+        //get data from local database
+        if(currentWorkingRoom!=null){
+            currentWorkingRoom.clear();
+        }
+        List<Room> r_temp = db.selectRooms(strDorm,d.getFloor(),strWing);
+        for(Room r:r_temp){
+            currentWorkingRoom.add(new Room(r.getName(),r.getNumber(),r.getStatus(),r.getTime(),
+                    r.getNote()));
+        }
         for(Room r:currentWorkingRoom){
             if(r.getNumber()!=0){
                 Room temp_r = new Room(r.getName().replace(" Hall",""),r.getNumber(),
                         r.getStatus(),r.getTime(),r.getNote());
-                roomList.set(id.getRoomID(temp_r.getFull_name()), r);
+                roomList.set(id.getRoomID(temp_r.getFull_name()), temp_r);
             }
         }
     }
@@ -262,6 +302,7 @@ public class MainActivity extends ActionBarActivity {
                     updateWebserver();
                     updateRoomList(dd);
                 }
+                System.out.println("Creating: "+dd.getDorm());
                 dd.Create(rotate,flip);
             }
         }

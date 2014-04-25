@@ -1,6 +1,12 @@
 <?php
 	session_start();
 	class FindRooms {
+		define("GRAY", 0);
+		define("GREEN", 1);
+		define("YELLOW", 2);
+		define("RED", 3);
+		define("EMPTY", 4);
+
 		private $db;
 		private $builder;
 		private $string;
@@ -78,17 +84,17 @@
 				}
 
 				// determin green, yellow, red, or grey color
-				if($state == 1)
+				if($state == GREEN)
 					$this->buildString("<td class=\"success room ");
-				elseif($state == 2)
+				elseif($state == YELLOW)
 					$this->buildString("<td class=\"warning room ");
-				elseif($state == 3)
+				elseif($state == RED)
 					$this->buildString("<td class=\"danger room ");
 				else
 					$this->buildString("<td class=\"info room ");
 				
 				// this is a room
-				if($state < 4)
+				if($state < EMPTY)
 				{
 					// determine left or right of the wing
 					if($left == 1)
@@ -100,22 +106,22 @@
 					$this->buildString("<a data-toggle=\"modal\" href=\"#myModal\" onclick=\"setModal($number)\">");
 					$this->buildString("<span>$number</span></a>\n");
 					$this->buildString("<span class=\"previous ");
-					if($state1 == 0) $this->buildString("empty\"></span>\n");
-					else if($state1 == 1) $this->buildString("green\"></span>\n");
-					else if($state1 == 2) $this->buildString("yellow\"></span>\n");
-					else if($state1 == 3) $this->buildString("red\"></span>\n");
+					if($state1 == GRAY) $this->buildString("empty\"></span>\n");
+					else if($state1 == GREEN) $this->buildString("green\"></span>\n");
+					else if($state1 == YELLOW) $this->buildString("yellow\"></span>\n");
+					else if($state1 == RED) $this->buildString("red\"></span>\n");
 
 					$this->buildString("<span class=\"previous ");
-					if($state2 == 0) $this->buildString("empty\"></span>\n");
-					else if($state2 == 1) $this->buildString("green\"></span>\n");
-					else if($state2 == 2) $this->buildString("yellow\"></span>\n");
-					else if($state2 == 3) $this->buildString("red\"></span>\n");
+					if($state2 == GRAY) $this->buildString("empty\"></span>\n");
+					else if($state2 == GREEN) $this->buildString("green\"></span>\n");
+					else if($state2 == YELLOW) $this->buildString("yellow\"></span>\n");
+					else if($state2 == RED) $this->buildString("red\"></span>\n");
 					
 					$this->buildString("<span class=\"previous ");
-					if($state3 == 0) $this->buildString("empty\"></span>\n");
-					else if($state3 == 1) $this->buildString("green\"></span>\n");
-					else if($state3 == 2) $this->buildString("yellow\"></span>\n");
-					else if($state3 == 3) $this->buildString("red\"></span>\n");
+					if($state3 == GRAY) $this->buildString("empty\"></span>\n");
+					else if($state3 == GREEN) $this->buildString("green\"></span>\n");
+					else if($state3 == YELLOW) $this->buildString("yellow\"></span>\n");
+					else if($state3 == RED) $this->buildString("red\"></span>\n");
 				}
 				// this is an empty room or bathroom
 				else

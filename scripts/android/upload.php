@@ -8,6 +8,12 @@
     mysql_connect("localhost", "ryana3", "sturman");
     mysql_select_db("ryana3_test");
 
+    // query to find 'id' needed to update the specfifc room
+	$sql = "SELECT * FROM dorms WHERE dorm_name='$dorm';";
+	$result = mysql_query($sql);
+	$row = mysql_fetch_assoc($result);
+	$dorm_id = $row['dorm_id'];
+
     foreach($json as $row)
     {
       $room = $row['room_number'];
@@ -21,18 +27,17 @@
       else if($s == "3")
         $state = 0;
       $date = $row['date'];
-      $notes = $row['notes'];
+      $notes = $row['notes'];     
 
-      // query to find 'id' needed to update the specfifc room
-      $sql = "SELECT r.id FROM rooms r, dorms d WHERE d.dorm_name='$dorm' and r.room_number=$room;";
-      $result = mysql_query($sql);
-      $row = mysql_fetch_assoc($result);
+	  $sql = "SELECT * FROM rooms WHERE dorm_id=$dorm_id AND room_number=$room;";
+	  $result = mysql_query($sql);
+	  $row = mysql_fetch_assoc($result);
+	  $id = $row['id'];
 
-      // query to update the room given a specific 'id'
-      $id = $row['id'];
       $sql = "UPDATE rooms SET state=$state, notes='$note', date='$date' WHERE id=$id;";
       mysql_query($sql);
     }
+
     echo("Success");
   }
 ?>

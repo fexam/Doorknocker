@@ -21,21 +21,10 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +83,6 @@ public class MainActivity extends ActionBarActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 radioChange=false;
                 String d = (String) spin1.getSelectedItem();
-                Boolean radioCheck =false;
                 String f = (String) adapterView.getItemAtPosition(i);
                 RadioButton sw = (RadioButton) findViewById(R.id.SWing);
                 RadioButton nw = (RadioButton) findViewById(R.id.NWing);
@@ -103,13 +91,9 @@ public class MainActivity extends ActionBarActivity {
                     nw.setEnabled(true);
                     if(!sw.isChecked()&&!nw.isChecked()){
                         sw.setChecked(true);
-                        radioCheck=true;
                     }
                 }
                 else{
-                    if(sw.isChecked()||nw.isChecked()){
-                        radioCheck=true;
-                    }
                     ((RadioGroup) findViewById(R.id.WingGroup)).clearCheck();
                     sw.setEnabled(false);
                     nw.setEnabled(false);
@@ -198,22 +182,18 @@ public class MainActivity extends ActionBarActivity {
                         JObj.put("date", temp.getTime());
                         JObj.put("notes", temp.getNote());
                         toSend.put(JObj);
-                        System.out.println("Posting: RoomName: " + fName + " Number :"
+                        /*System.out.println("Posting: RoomName: " + fName + " Number :"
                                 + temp.getNumber() + " State: "+temp.getStatus()+
                                 " date: "+temp.getTime()+" notes: "+temp.getNote());
                         System.out.println("RPosting: RoomName: " + fName + " Number :"
                                 + r.getNumber() + " State: "+r.getStatus()+
-                                " date: "+r.getTime()+" notes: "+r.getNote());
+                                " date: "+r.getTime()+" notes: "+r.getNote());*/
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    }
-                    if(temp.getNumber()!=r.getNumber()){
-                        System.out.print("*****SOMETHING DOES NOT RIGHT******");
                     }
                     if(temp.getStatus()!=r.getStatus()||temp.getNote().compareTo(r.getNote())!=0
                             ||temp.getTime().compareTo(r.getTime())!=0){
                         modified=true;
-                        System.out.println("*****MODIFIED******");
                     }
                 }
             }
@@ -226,12 +206,10 @@ public class MainActivity extends ActionBarActivity {
                     fName += "%20Hall";
                 }
                 url += fName;
-                System.out.println(url);
                 Url.put(url);
                 if(modified){
                     JSonTransmitter transmitter = new JSonTransmitter();
                     transmitter.execute(toSend, Url);
-                    System.out.println("----Post----");
                 }
             }
         }

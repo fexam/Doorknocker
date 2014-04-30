@@ -27,7 +27,7 @@
       else if($s == "3")
         $state = 0;
       $date = $row['date'];
-      $notes = $row['notes'];     
+      $note = $row['notes'];     
 
 	  $sql = "SELECT * FROM rooms WHERE dorm_id=$dorm_id AND room_number=$room;";
 	  $result = mysql_query($sql);

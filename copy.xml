@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DoorKnocker" default="deploy-all" basedir=".">
+	<!-- PROPERTIES -->
+	<property name="ftp.host" value="studentdev.union.rpi.edu" />
+    <property name="ftp.username" value="ryana3" />
+    <property name="ftp.password" value="sturman" />
+    <property name="ftp.main" value="/public_html" />
+    <property name="ftp.scripts" value="/public_html/scripts" />
+    <property name="ftp.js" value="/public_html/js" />
+    <property name="ftp.css" value="/public_html/css" />
+    <property name="ftp.images" value="/public_html/images" />
+    <property name="ftp.android" value="/public_html/scripts/android" />
+    <property name="ftp.mode" value="ascii" />
+    <property name="ftp.passive" value="true" />
+
+    <!-- FILESETS -->
+    <fileset dir="." id="main">
+		<include name="*.php"/>
+	</fileset>
+	<fileset dir="css" id="css">
+		<include name="*.css"/>
+	</fileset>
+	<fileset dir="js" id="js">
+		<include name="*.js"/>
+	</fileset>
+	<fileset dir="images" id="images">
+		<include name="*.png"/>
+	</fileset>
+	<fileset dir="scripts" id="scripts">
+		<include name="*.php"/>
+	</fileset>
+	<fileset dir="scripts/android" id="android">
+		<include name="*.php"/>
+	</fileset>
+
+    <!-- Deploy files -->
+	<target name="deploy-main">
+		<echo message="Copying fileset main to ${ftp.host}" />
+		<ftpdeploy
+			host="${ftp.host}"
+			username="${ftp.username}"
+			password="${ftp.password}"
+			dir="${ftp.main}"
+			mode="${ftp.mode}"
+			passive="true">
+			<fileset refid="main" />
+		</ftpdeploy>
+	</target>
+
+	<target name="deploy-css">
+		<echo message="Copying fileset css to ${ftp.host}" />
+		<ftpdeploy
+			host="${ftp.host}"
+			username="${ftp.username}"
+			password="${ftp.password}"
+			dir="${ftp.css}"
+			mode="${ftp.mode}"
+			passive="${ftp.passive}">
+			<fileset refid="css" />
+		</ftpdeploy>
+	</target>
+
+	<target name="deploy-js">
+		<echo message="Copying fileset js to ${ftp.host}" />
+		<ftpdeploy
+			host="${ftp.host}"
+			username="${ftp.username}"
+			password="${ftp.password}"
+			dir="${ftp.js}"
+			mode="${ftp.mode}"
+			passive="${ftp.passive}">
+			<fileset refid="js" />
+		</ftpdeploy>
+	</target>
+
+	<target name="deploy-images">
+		<echo message="Copying fileset images to ${ftp.host}" />
+		<ftpdeploy
+			host="${ftp.host}"
+			username="${ftp.username}"
+			password="${ftp.password}"
+			dir="${ftp.images}"
+			mode="binary"
+			passive="${ftp.passive}">
+			<fileset refid="images" />
+		</ftpdeploy>
+	</target>
+
+	<target name="deploy-scripts">
+		<echo message="Copying fileset scripts to ${ftp.host}" />
+		<ftpdeploy
+			host="${ftp.host}"
+			username="${ftp.username}"
+			password="${ftp.password}"
+			dir="${ftp.scripts}"
+			mode="${ftp.mode}"
+			passive="${ftp.passive}">
+			<fileset refid="scripts" />
+		</ftpdeploy>
+	</target>
+
+	<target name="deploy-android">
+		<echo message="Copying fileset android to ${ftp.host}" />
+		<ftpdeploy
+			host="${ftp.host}"
+			username="${ftp.username}"
+			password="${ftp.password}"
+			dir="${ftp.android}"
+			mode="${ftp.mode}"
+			passive="${ftp.passive}">
+			<fileset refid="android" />
+		</ftpdeploy>
+	</target>
+
+	<target name="db">
+		<echo message="Creating database" />
+		<pdo url="mysql:host=localhost;dbname=ryana3_test" userId="ryana3" password="sturman">
+			<fileset dir=".">
+				<include name="*.sql" />
+			</fileset>
+		</pdo>
+	</target>
+
+	<!-- Default to deploy all files -->
+	<target name="deploy-all">
+        <phingcall target="deploy-main" />
+        <phingcall target="deploy-css" />
+        <phingcall target="deploy-js" />
+        <phingcall target="deploy-images" />
+        <phingcall target="deploy-scripts" />
+        <phingcall target="deploy-android" />
+        <phingcall target="db" />
+        <echo>All Done!</echo>
+    </target>
+</project>

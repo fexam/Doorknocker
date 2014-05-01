@@ -1,12 +1,12 @@
 <?php
 	session_start();
-	class FindRooms {
-		define("GRAY", 0);
-		define("GREEN", 1);
-		define("YELLOW", 2);
-		define("RED", 3);
-		define("EMPTY", 4);
+	define("GRAY", 0);
+	define("GREEN", 1);
+	define("YELLOW", 2);
+	define("RED", 3);
+	define("EMPTY", 4);
 
+	class FindRooms {
 		private $db;
 		private $builder;
 		private $string;
@@ -84,17 +84,17 @@
 				}
 
 				// determin green, yellow, red, or grey color
-				if($state == GREEN)
+				if($state == constant("GREEN"))
 					$this->buildString("<td class=\"success room ");
-				elseif($state == YELLOW)
+				elseif($state == constant("YELLOW"))
 					$this->buildString("<td class=\"warning room ");
-				elseif($state == RED)
+				elseif($state == constant("RED"))
 					$this->buildString("<td class=\"danger room ");
 				else
 					$this->buildString("<td class=\"info room ");
 				
 				// this is a room
-				if($state < EMPTY)
+				if($state < constant("EMPTY"))
 				{
 					// determine left or right of the wing
 					if($left == 1)

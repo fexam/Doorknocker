@@ -22,7 +22,7 @@ class Auth
       return false;
   }
 
-  public function login($username, $password)
+  public function login($username)
   {
     // set the global username and password
     $_SESSION['username'] = $username;

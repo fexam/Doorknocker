@@ -91,7 +91,6 @@ function markAll()
 			for(var i=0; i<elements.length; i++)
 			{
 				var classes = elements[i].getAttribute("class").split(" ");
-				counter++;
 				
 				// no halls, empty rooms or bathrooms should be changed
 				if(classes[0] != "hall" && classes[2] != 'rnone' && classes[2] != 'rnone')

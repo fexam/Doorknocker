@@ -1,5 +1,4 @@
 <?php
-
 include_once 'page-class.php';
 
 class Floor
@@ -61,6 +60,51 @@ class Floor
       return true;
     else
       return false;
+  }
+
+  public function findDormID($dorm)
+  {
+    $sql = "SELECT * FROM dorms WHERE dorm_name='$dorm';";
+    $result = mysql_query($sql);
+    $row = mysql_fetch_assoc($result);
+    $dorm_id = $row['dorm_id'];
+
+    return $dorm_id;
+  }
+
+  public function findRoomID($dorm_id, $room)
+  {
+    $sql = "SELECT * FROM rooms WHERE dorm_id=$dorm_id AND room_number=$room;";
+    $result = mysql_query($sql);
+    $row = mysql_fetch_assoc($result);
+    $id = $row['id'];
+
+    return $id;
+  }
+
+  public function saveRoom($id, $state, $notes, $date, $state1, $state2, $state3)
+  {
+    // query to update the room given a specific 'id'
+    $sql = "UPDATE rooms SET state=$state, notes='$note', date='$date', state1='$state1',
+                 state2='$state2', state3='$state3' WHERE id=$id;";
+    mysql_query($sql);
+  }
+
+  public function saveState($id, $state, $date)
+  {
+    // query to update the room given a specific 'id'
+    $sql = "UPDATE rooms SET state=$state, date='$date' WHERE id=$id;";
+    mysql_query($sql);
+  }
+
+  public function getState($id)
+  {
+    // query to update the room given a specific 'id'
+    $sql = "SELECT * FROM rooms WHERE id=$id;";
+    $result = mysql_query($sql);
+    $row = mysql_fetch_assoc($result);
+
+    return $row['state'];
   }
 }
 

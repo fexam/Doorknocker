@@ -2,9 +2,11 @@
 	ob_start();
 	session_start();
 	include 'database-class.php';
-	
+	include 'floor-class.php';
+
 	// Connect to database
   	$db = new Database();
+  	$floor = new Floor();
   	$db->connect();
 
 	// given data upon clicking the 'Save' data button
@@ -18,15 +20,8 @@
 	$dorm = $_SESSION['dorm'];
 
 	// query to find 'id' needed to update the specfifc room
-	$sql = "SELECT * FROM dorms WHERE dorm_name='$dorm';";
-  	$result = mysql_query($sql);
-  	$row = mysql_fetch_assoc($result);
-  	$dorm_id = $row['dorm_id'];
-
-  	$sql = "SELECT * FROM rooms WHERE dorm_id=$dorm_id AND room_number=$room;";
-  	$result = mysql_query($sql);
-  	$row = mysql_fetch_assoc($result);
-  	$id = $row['id'];
+	$dorm_id = $floor->findDormID($dorm);
+  	$id = $floor->findRoomID($dorm_id, $room);
   	
   	// determine the room color
   	if($radio == 'green') $state = 1;
@@ -50,8 +45,5 @@
 	else if($s3 == "yellow") $state3 = 2;
 	else if($s3 == "red") $state3 = 3;
 
-	// query to update the room given a specific 'id'
-  	$sql = "UPDATE rooms SET state=$state, notes='$note', date='$date', state1='$state1',
-  							 state2='$state2', state3='$state3' WHERE id=$id;";
-	mysql_query($sql);
+	$floor->saveRoom($id, $state, $notes, $date, $state1, $state2, $state3);
 ?>

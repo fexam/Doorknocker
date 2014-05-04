@@ -93,7 +93,7 @@ function markAll()
 				var classes = elements[i].getAttribute("class").split(" ");
 				
 				// no halls, empty rooms or bathrooms should be changed
-				if(classes[0] != "hall" && classes[2] != 'rnone' && classes[2] != 'rnone')
+				if(classes[0] != "hall" && classes[2] != 'lnone' && classes[2] != 'rnone')
 				{
 					var id = elements[i].getAttribute("id");
 					var post_data = "room=" + id + "&date=" + today;

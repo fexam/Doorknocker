@@ -25,6 +25,7 @@ class Database
 		mysql_connect("localhost", $this->username, $this->password) or die("bad");
 	}
 
+	// seed database for testing
 	public function seedData($dorm_id, $dorm_name)
     {
       // Connect to database
@@ -43,6 +44,7 @@ class Database
       echo("<br>Built database<br>");
     }
 
+    // remove all seeded data
     public function removeData($dorm_id)
     {
       $sql = "DELETE FROM `dorms` WHERE dorm_id=$dorm_id;";

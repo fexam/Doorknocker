@@ -18,6 +18,8 @@
   // protect against MySQL injection
   $myusername = strip($myusername);
   $mypassword = strip($mypassword);
+
+  // get number of users located
   $count = $user->findUser($myusername);
 
   // check if no accounts were returned

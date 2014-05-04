@@ -62,6 +62,7 @@ class Floor
       return false;
   }
 
+  // get dorm_id based on given dorm name
   public function findDormID($dorm)
   {
     $sql = "SELECT * FROM dorms WHERE dorm_name='$dorm';";
@@ -72,6 +73,7 @@ class Floor
     return $dorm_id;
   }
 
+  // get room id based on given dorm id and room number
   public function findRoomID($dorm_id, $room)
   {
     $sql = "SELECT * FROM rooms WHERE dorm_id=$dorm_id AND room_number=$room;";
@@ -82,6 +84,7 @@ class Floor
     return $id;
   }
 
+  // save changed room information
   public function saveRoom($id, $state, $notes, $date, $state1, $state2, $state3)
   {
     // query to update the room given a specific 'id'
@@ -90,6 +93,7 @@ class Floor
     mysql_query($sql);
   }
 
+  // save chaged room state
   public function saveState($id, $state, $date)
   {
     // query to update the room given a specific 'id'
@@ -97,6 +101,7 @@ class Floor
     mysql_query($sql);
   }
 
+  // get the state of the room (used for mock object testing)
   public function getState($id)
   {
     // query to update the room given a specific 'id'

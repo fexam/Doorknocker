@@ -1,5 +1,6 @@
 <?php
 
+// make sure given data is database safe
 function strip($name)
 {
 	$name = stripslashes($name);
@@ -15,6 +16,7 @@ class User
 		// nothing to intialize
 	}
 
+	// return count of users found (should be 1 or 0)
 	public function findUser($username)
 	{
 		// create and execute query
@@ -25,6 +27,7 @@ class User
 		return $count;
 	}
 
+	// find user based on a username and password (should be 1 or 0)
 	public function findUserPassword($username, $password)
 	{
 		$salt = 'hello_1m_@_SaLT';
@@ -37,6 +40,7 @@ class User
 		return $count;
 	}
 	
+	// add user to members database
 	public function addUser($username, $password)
 	{
 		$salt = 'hello_1m_@_SaLT';
@@ -46,6 +50,7 @@ class User
 		mysql_query($command);
 	}
 
+	// remove user from members database
 	public function removeUser($username)
 	{
 		$command = "DELETE FROM members WHERE username='$username';";

@@ -13,12 +13,13 @@
 	$date = $_POST['date'];
 	$dorm = $_SESSION['dorm'];
 
-	// query to find 'id' needed to update the specfifc room 	
+	// find specific room id
   $dorm_id = $floor->findDormID($dorm);
   $id = $floor->findRoomID($dorm_id, $room);
 
 	// state number for a red room
 	$state = 3;
 
+  // save just the state to the database
 	$floor->saveState($id, $state, $date);
 ?>

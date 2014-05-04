@@ -19,6 +19,7 @@
   $myusername = strip($myusername);
   $mypassword = strip($mypassword);
 
+  // get number of users located
   $count = $user->findUserPassword($myusername, $mypassword);
 
   // check if only one account was returned

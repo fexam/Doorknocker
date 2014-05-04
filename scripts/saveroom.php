@@ -19,7 +19,7 @@
 	$s3 = $_POST['s3'];
 	$dorm = $_SESSION['dorm'];
 
-	// query to find 'id' needed to update the specfifc room
+	// find specific room id
 	$dorm_id = $floor->findDormID($dorm);
   	$id = $floor->findRoomID($dorm_id, $room);
   	
@@ -45,5 +45,6 @@
 	else if($s3 == "yellow") $state3 = 2;
 	else if($s3 == "red") $state3 = 3;
 
+	// save changes to the database
 	$floor->saveRoom($id, $state, $notes, $date, $state1, $state2, $state3);
 ?>

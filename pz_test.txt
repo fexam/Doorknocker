@@ -1,0 +1,17 @@
+<?php
+	
+	$db = new mysqli('localhost', 'ryana3', 'sturman', 'ryana3_test');
+	$this->db->autocommit(false);
+	$data = json_decode($_POST['json'],true);
+	
+	$stmt = $db->prepare("UPDATE rooms
+						SET state = $data->{'state'},
+							date = '$data->{'date'}',
+							notes = '$data->{'notes'}',
+							state1 = $data->{'state1'},
+							state2 = $data->{'state2'},
+							state3 = $data->{'state3'}
+						WHERE id = $data->{'id'}");
+	
+	$stmt->execute();
+?>
